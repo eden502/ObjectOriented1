@@ -1,7 +1,13 @@
 package elections;
 
-public class CoronaVotingStation {
+public class CoronaVotingStation extends VotingStation{
 	
 	private boolean isWearingProtection;
+	
+	public CoronaVotingStation() {
+		
+	}
+	
+	
 
 }

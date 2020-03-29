@@ -1,7 +1,6 @@
 package elections;
 
-public class MilitaryVotingStation {
-	
+public class MilitaryVotingStation extends VotingStation{
 	
 
 }
