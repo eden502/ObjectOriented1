@@ -6,6 +6,9 @@ public class Program {
 	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
+		
+		RoundManager round1 = new RoundManager();
+		
 		int choice = scan.nextInt();
 		
 		do {
