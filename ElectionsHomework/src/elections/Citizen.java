@@ -15,9 +15,6 @@ public class Citizen {
 	protected boolean isInIsolation;
 	
 	
-	public Citizen() {
-		this(DEFAULT_ID, DEFAULT_YEAR,)
-	}
 	
 	public Citizen (int id) {
 		
@@ -28,22 +25,33 @@ public class Citizen {
 	public Citizen (int id, int birthYear, String name) {
 		
 	}
-	public Citizen (int id, int birthYear, String name, VotingStation votesWhere) {
-		
-	}
-	public Citizen (int id, int birthYear,String name, VotingStation votesWhere, boolean isInIsolation) {
+	public Citizen (int id, int birthYear,String name, boolean isInIsolation) {
 		setId(id);
 		setBirthYear(birthYear);
-		setVotingStation(votesWhere);
+		setName(name);
 		this.isInIsolation = isInIsolation;
 	}
 
-	private boolean setVotingStation(VotingStation votesWhere) {
-		this.votesWhere = votesWhere;
+	
+	//----------------------------------------------------- CHECK IF WE CAN USE ID INSTEAD-----------------------------------
+	
+	private void setName(String name) {
+		this.name = name;
+	}
+	public boolean setVotingStation(int numOfVotingStationsAdded, VotingStation[] allVotingStations) {
+		
+		int rand = 1;//(int)Math.random()*numOfVotingStationsAdded;
+		for (int i = 0; i < numOfVotingStationsAdded; i++) {
+			if(rand == allVotingStations[i].getStationId()) {
+				this.votesWhere = allVotingStations[i];
+				allVotingStations[i].addCitizen(this);
+				break;
+			}
+		}
 		return true;
 		
 	}
-
+	//-----------------------------------------------------------------------------------------------------------------------
 	private boolean setBirthYear(int birthYear) {
 		if (birthYear>1920&&birthYear<CURRENT_YEAR-18) {
 			this.birthYear=birthYear;
@@ -58,6 +66,11 @@ public class Citizen {
 		//in the future ID will be tested for 9 digits		
 		this.id=id;
 		return true;
+	}
+	@Override
+	public String toString() {
+		return "Citizen [id=" + id + ", birthYear=" + birthYear + ", name=" + name + ", votesWhere=" + votesWhere
+				+ ", isInIsolation=" + isInIsolation + "]";
 	}
 
 }

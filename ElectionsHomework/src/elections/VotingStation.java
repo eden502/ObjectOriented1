@@ -1,8 +1,11 @@
 package elections;
 
-public class VotingStation extends RoundManager{
+import java.util.Arrays;
+
+public class VotingStation{
 	
-	protected static int stationId;
+	protected static int numOfVotersAdded;
+	protected int stationId = 1;
 	protected Citizen [] voteList;
 	protected String address;
 	protected int [] results;
@@ -14,22 +17,30 @@ public class VotingStation extends RoundManager{
 		
 	}
 		
-	public VotingStation(String address) {
-		
-	}
 	
-	public VotingStation(String address, Citizen [] list) {
-		stationId++;
+	public VotingStation(String address,int listSize) {
 		this.address = address;
-		voteList = list;
-		
-		createStation();
+		this.voteList = new Citizen[listSize];
 		
 	}	
 
-	private void createStation() {
-	results = new int [getNumOfParties()];
+	public int getStationId() {
+		return this.stationId;
 	}
+
+
+	public void addCitizen(Citizen citizen) {
+		voteList[numOfVotersAdded++] = citizen;
+		
+	}
+
+
+	@Override
+	public String toString() {
+		return "VotingStation [voteList=" + Arrays.toString(voteList) + ", address=" + address + "]";
+	}
+	
+	
 	
 
 }
