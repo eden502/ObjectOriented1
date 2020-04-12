@@ -6,9 +6,16 @@ public class RoundManager {
 	protected Citizen[] allCitizens;
 	protected Party [] allParties;
 	protected VotingStation [] allVotingStations;
-	protected String [] cities;
+	private int numOfCitizenAdded, numOfPartiesAdded;
 	
-	
+	//------------------RoundManager C'tor-------------------
+	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber) {
+		allCitizens = new Citizen[totalCitizens];
+		allParties = new Party[totalParties];
+		allVotingStations = new VotingStation[totalVotingStat];
+		numOfCitizenAdded = 0;
+		numOfPartiesAdded = 0;
+	}
 	//------------------CITIZEN RELATED-------------------
 	
 	Citizen [] allCitizens = new Citizen [20];
@@ -26,12 +33,8 @@ public class RoundManager {
 	
 
 
-	public boolean createCitizens() {
-		int id, birthYear;
-		String name = "A";
-		for (int i = 0; i < names.length; i++) {
-			names[i] = name;
-			name+="A";
+	public boolean createCitizens(Citizen citizen_new) {
+		allCitizens[numOfCitizenAdded++] = citizen_new;
 			
 		}
 		
