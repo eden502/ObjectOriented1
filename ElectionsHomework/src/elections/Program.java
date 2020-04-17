@@ -16,11 +16,11 @@ public class Program {
 		allVotingStations[1] = new VotingStation("Rosh Pina 46",50);	
 		
 		Citizen [] allCitizens = new Citizen [5];
-		allCitizens[0] = new Citizen(000000000, 1989, "Hob", false);
+		allCitizens[4] = new Citizen(555555555, 1989, "Hob", false);
 		allCitizens[1] = new Citizen(111111111, 1990, "Bob", false);
 		allCitizens[2] = new Citizen(222222222, 1991, "Rob", false);
 		allCitizens[3] = new Citizen(333333333, 1992, "Kob", false);
-		allCitizens[4] = new Citizen(444444444, 1993, "Sob", false);
+		allCitizens[0] = new Citizen(444444444, 1993, "Sob", false);
 		
 		round1.addCitizensList(allCitizens);
 		round1.addVotingStationList(allVotingStations);

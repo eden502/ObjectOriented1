@@ -3,13 +3,13 @@ package elections;
 import java.util.Arrays;
 
 public class RoundManager {
-	
+
 	protected Citizen[] allCitizens;
-	protected Party [] allParties;
-	protected VotingStation [] allVotingStations;
+	protected Party[] allParties;
+	protected VotingStation[] allVotingStations;
 	private int numOfCitizenAdded, numOfPartiesAdded, numOfVotingStationsAdded;
-	
-	//------------------RoundManager C'tor-------------------
+
+	// ------------------RoundManager C'tor-------------------
 	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber) {
 		allCitizens = new Citizen[totalCitizens];
 		allParties = new Party[totalParties];
@@ -17,13 +17,12 @@ public class RoundManager {
 		numOfCitizenAdded = 0;
 		numOfPartiesAdded = 0;
 	}
-	//------------------CITIZEN RELATED-------------------
-	
-	//----------------------------------------------------
-	
-	//-------------------PARTY RELATED--------------------
-	
-	
+	// ------------------CITIZEN RELATED-------------------
+
+	// ----------------------------------------------------
+
+	// -------------------PARTY RELATED--------------------
+
 	public int getNumOfParties() {
 		return allParties.length;
 	}
@@ -50,17 +49,30 @@ public class RoundManager {
 		numOfCitizenAdded = allCitizens2.length;
 	}
 
+//----------------------Old set voting station-------------------------
+//	public void setCitizenVotingStation() {
+//		for (int i = 0; i < numOfCitizenAdded; i++) {
+//			allCitizens[i].setVotingStation(numOfVotingStationsAdded, allVotingStations);
+//			
+//		}
+//	}
+//---------------------------------------------------------------------
 	public void setCitizenVotingStation() {
 		for (int i = 0; i < numOfCitizenAdded; i++) {
-			allCitizens[i].setVotingStation(numOfVotingStationsAdded, allVotingStations);
-			
+			allCitizens[i].setVotingStation(numOfVotingStationsAdded);
+			addCitizenToVotingStation(allCitizens[i]);
+
 		}
+	}
+
+	private void addCitizenToVotingStation(Citizen c1) {
+		allVotingStations[c1.getVotingStation()-1].addCitizen(c1);
 	}
 
 	public void addVotingStationList(VotingStation[] allVotingStations) {
 		this.allVotingStations = allVotingStations;
 		numOfVotingStationsAdded = allVotingStations.length;
-		}
+	}
 
 	@Override
 	public String toString() {
@@ -69,9 +81,5 @@ public class RoundManager {
 				+ ", numOfCitizenAdded=" + numOfCitizenAdded + ", numOfPartiesAdded=" + numOfPartiesAdded
 				+ ", numOfVotingStationsAdded=" + numOfVotingStationsAdded + "]";
 	}
-	
-	
-		
-	}
 
-
+}
