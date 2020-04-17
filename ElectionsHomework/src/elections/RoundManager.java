@@ -26,7 +26,7 @@ public class RoundManager {
 	public int getNumOfParties() {
 		return allParties.length;
 	}
-
+//
 //	public boolean createCitizens(Citizen citizen_new) {
 //		allCitizens[numOfCitizenAdded++] = citizen_new;
 //			
