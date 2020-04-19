@@ -9,6 +9,7 @@ public abstract class Party {
 	protected PartyMember [] members;
 	protected LocalDate dateCreated;
 	protected Wing wing;
+	private int numOfPartyMembers;
 	
 	
 	public Party(String partyName, LocalDate dateCreated, Wing wing) {
@@ -16,6 +17,7 @@ public abstract class Party {
 		members = new PartyMember[10];
 		this.dateCreated = dateCreated;
 		this.wing = wing;
+		numOfPartyMembers = 0;
 	}
 	
 	

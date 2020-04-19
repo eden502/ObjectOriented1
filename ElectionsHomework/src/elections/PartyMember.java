@@ -2,7 +2,7 @@ package elections;
 
 public class PartyMember extends Citizen {
 	
-	private static int position;
+	private int position;
 	private Party memberOf;
 	
 	
@@ -13,6 +13,12 @@ public class PartyMember extends Citizen {
 		this.memberOf = memberOf;
 		
 	}
+	
+	public String toString() {
+		return super.toString()+"Position #" + position + " In the party of the " + memberOf;
+	}
+	
+	
 
 
 }
