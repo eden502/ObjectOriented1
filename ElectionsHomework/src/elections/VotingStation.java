@@ -37,7 +37,7 @@ public class VotingStation{
 
 	@Override
 	public String toString() {
-		return "VotingStation [voteList=" + Arrays.toString(voteList) + ", address=" + address + "]";
+		return "\nVotingStation [voteList=" + Arrays.toString(voteList) + ", address=" + address + "]";
 	}
 	
 	

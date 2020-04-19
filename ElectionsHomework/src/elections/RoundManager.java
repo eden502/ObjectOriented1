@@ -8,14 +8,18 @@ public class RoundManager {
 	protected Party[] allParties;
 	protected VotingStation[] allVotingStations;
 	private int numOfCitizenAdded, numOfPartiesAdded, numOfVotingStationsAdded;
+	private String month;
+	private int day;
 
 	// ------------------RoundManager C'tor-------------------
-	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber) {
+	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber, int day, String month) {
 		allCitizens = new Citizen[totalCitizens];
 		allParties = new Party[totalParties];
 		allVotingStations = new VotingStation[totalVotingStat];
 		numOfCitizenAdded = 0;
 		numOfPartiesAdded = 0;
+		this.day = day;
+		this.month = month;
 	}
 	// ------------------CITIZEN RELATED-------------------
 
@@ -80,6 +84,14 @@ public class RoundManager {
 				+ Arrays.toString(allParties) + ", allVotingStations=" + Arrays.toString(allVotingStations)
 				+ ", numOfCitizenAdded=" + numOfCitizenAdded + ", numOfPartiesAdded=" + numOfPartiesAdded
 				+ ", numOfVotingStationsAdded=" + numOfVotingStationsAdded + "]";
+	}
+
+	public void addNewVotingStation(String address,int listSize ) {
+		if(numOfVotingStationsAdded<allVotingStations.length) {
+			allVotingStations[numOfVotingStationsAdded] = new VotingStation(address, listSize);
+			numOfVotingStationsAdded++;
+		}
+		
 	}
 
 }

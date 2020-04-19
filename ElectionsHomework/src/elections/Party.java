@@ -7,6 +7,13 @@ public abstract class Party {
 	protected String partyName;
 	protected PartyMember [] members;
 	protected LocalDate dateCreated;
+	private String wing;
+	
+	public Party() {
+		
+	}
+	
+	
 	
 
 }
