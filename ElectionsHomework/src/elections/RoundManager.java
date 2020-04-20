@@ -9,16 +9,16 @@ public class RoundManager {
 	protected VotingStation[] allVotingStations;
 	private int numOfCitizenAdded, numOfPartiesAdded, numOfVotingStationsAdded;
 	private String month;
-	private int day;
+	private int year;
 
 	// ------------------RoundManager C'tor-------------------
-	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber, int day, String month) {
+	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber, String month, int year ) {
 		allCitizens = new Citizen[totalCitizens];
 		allParties = new Party[totalParties];
 		allVotingStations = new VotingStation[totalVotingStat];
 		numOfCitizenAdded = 0;
 		numOfPartiesAdded = 0;
-		this.day = day;
+		this.year = year;
 		this.month = month;
 	}
 	// ------------------CITIZEN RELATED-------------------
@@ -47,10 +47,17 @@ public class RoundManager {
 //	public boolean createVotingStations() {
 //		return false;
 //	}
-
+	
+	
+	//----------------------HardCoded Initializing Methods-------------------------
 	public void addCitizensList(Citizen[] allCitizens2) {
 		this.allCitizens = allCitizens2;
 		numOfCitizenAdded = allCitizens2.length;
+	}
+	
+	public void addVotingStationList(VotingStation[] allVotingStations) {
+		this.allVotingStations = allVotingStations;
+		numOfVotingStationsAdded = allVotingStations.length;
 	}
 
 //----------------------Old set voting station-------------------------
@@ -71,12 +78,10 @@ public class RoundManager {
 
 	private void addCitizenToVotingStation(Citizen c1) {
 		allVotingStations[c1.getVotingStation()-1].addCitizen(c1);
+		c1.setVotesWhere(allVotingStations[c1.getVotingStation()-1]);
 	}
 
-	public void addVotingStationList(VotingStation[] allVotingStations) {
-		this.allVotingStations = allVotingStations;
-		numOfVotingStationsAdded = allVotingStations.length;
-	}
+
 
 	@Override
 	public String toString() {

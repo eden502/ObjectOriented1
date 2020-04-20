@@ -70,11 +70,15 @@ public class Citizen {
 	 * generates random number between 1 and total number of stations
 	 * sets Citizen voting station
 	 */
-	
-	
-	public int getVotingStation() {
+		public int getVotingStation() {
 		return voteStation;
 	}
+	
+	public void setVotesWhere(VotingStation votesWhere) {
+		this.votesWhere = votesWhere;
+	}
+	
+
 	
 	//-----------------------------------------------------------------------------------------------------------------------
 	

@@ -5,7 +5,8 @@ import java.util.Arrays;
 public class VotingStation{
 	
 	protected static int numOfVotersAdded;
-	protected int stationId = 1;
+	protected static int stationIdCounter = 1;
+	protected int stationId;
 	protected Citizen [] voteList;
 	protected String address;
 	protected int [] results;
@@ -21,7 +22,7 @@ public class VotingStation{
 	public VotingStation(String address,int listSize) {
 		this.address = address;
 		this.voteList = new Citizen[listSize];
-		
+		this.stationId = stationIdCounter++;
 	}	
 
 	public int getStationId() {
