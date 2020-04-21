@@ -83,6 +83,7 @@ public class Program {
 				break;
 			case 3:
 				
+				
 				//round1.addNewParty();
 				break;
 			case 4:
