@@ -1,6 +1,9 @@
 package elections;
 
+import java.time.LocalDate;
 import java.util.Scanner;
+
+import elections.Party.Wing;
 
 public class Program {
 	
@@ -9,75 +12,110 @@ public class Program {
 		
 		//-----------HARD CODED OBJECTS------------------
 		int numOfCitizens = 50;
-		RoundManager round1 = new RoundManager(numOfCitizens, 2, 2, 1,30,"April");
+		RoundManager round1 = new RoundManager(numOfCitizens, 2, 2, 3,30,"April",2020);
 		
 		VotingStation [] allVotingStations = new VotingStation [2];
 		allVotingStations[0] = new VotingStation("Tel Aviv 15",50);
 		allVotingStations[1] = new VotingStation("Rosh Pina 46",50);	
 		
-		Citizen [] allCitizens = new Citizen [5];
+		Party [] allParties = new Party [3];
+		LocalDate likud = LocalDate.of(1988, 4, 25);
+		LocalDate meretz = LocalDate.of(2002, 6, 14);
+		LocalDate KL = LocalDate.of(2017, 5, 12);
+		allParties[0] = new Party ("Likud",likud,Wing.Right);
+		allParties[1] = new Party ("Meretz",meretz,Wing.Left);
+		allParties[2] = new Party ("Kahol Lavan",KL,Wing.Center);
+		
+		
+	
+		
+		Citizen [] allCitizens = new Citizen [10];
 		allCitizens[4] = new Citizen(555555555, 1989, "Hob", false);
 		allCitizens[1] = new Citizen(111111111, 1990, "Bob", false);
 		allCitizens[2] = new Citizen(222222222, 1991, "Rob", false);
 		allCitizens[3] = new Citizen(333333333, 1992, "Kob", false);
 		allCitizens[0] = new Citizen(444444444, 1993, "Sob", false);
+		allCitizens[5] = new Citizen(666666666, 1989, "erob", false);
+		allCitizens[6] = new Citizen(777777777, 1990, "Bwer", false);
+		allCitizens[7] = new Citizen(888888888, 1991, "Rhf", false);
+		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs", false);
+		allCitizens[9] = new Citizen(121212121, 1993, "Sasdg", false);
 		
 		round1.addCitizensList(allCitizens);
 		round1.addVotingStationList(allVotingStations);
 		round1.setCitizenVotingStation();
+		round1.setParties(allParties);
 			
 		
 			
 		
-		//
+		//-----------------Menu------------------------
+		System.out.println(round1.getYear()+" Election system:");
+		System.out.println("1.Add voting station");
+		System.out.println("2.Add citizen");
+		System.out.println("3.Add party");
+		System.out.println("4.Add party candidate");
+		System.out.println("5.Show all voting stations");
+		System.out.println("6.Show all citizens");
+		System.out.println("7.Show all parties");
+		System.out.println("8.Vote");
+		System.out.println("9.Show results");
+		System.out.println("10.Exit");
+		
+		
+		//---------------------------------------------
 		
 		
 		Scanner scan = new Scanner(System.in);
-		System.out.println(round1.toString());
+		//System.out.println(round1.toString());
 		
 		int choice = scan.nextInt();
 		
-		do {
+	//	do {
 			switch(choice) {
 			case 1:
-				System.out.println("Add voting station");
+				
 			//	round1.addNewVotingStation();
 				break;
 			case 2:
-				System.out.println("Add citizen");
+				
 			//	round1.addNewCitizen();
 				break;
 			case 3:
-				System.out.println("Add party");
+				
 				//round1.addNewParty();
 				break;
 			case 4:
-				System.out.println("Add party candidate");
+				
 				//round1.addNewCandidate();
 				break;
 			case 5:
-				System.out.println("Show all voting stations");
-			//	System.out.println(round1.getVotingStations());
+				
+				System.out.println(round1.getVotingStations());
 				break;
 			case 6:
-				System.out.println("Show all citizens");
-				//System.out.println(round1.getAllCitizens());
+			
+				System.out.println(round1.getAllCitizens());
 				break;
 			case 7:
-				System.out.println("Show all parties");
-				//System.out.println(round1.getAllParties());
+			
+				System.out.println(round1.showAllParties());
 				break;
 			case 8:
-				System.out.println("Check if wants to vote");
+			
+				round1.startVote();
+				System.out.println(round1.results());
+				
 				break;
 			case 9:
-				System.out.println("Show results");
+			
+				System.out.println(round1.results());
 				break;
 			case 10:
-				System.out.println("Exit");
+			
 				break;
 			}
-		}while(choice!=10);
+	//	}while(choice!=10);
 	}
 }
 
