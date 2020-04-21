@@ -78,7 +78,7 @@ public class Program {
 			//	round1.addNewVotingStation();
 				break;
 			case 2:
-				
+				//
 			//	round1.addNewCitizen();
 				break;
 			case 3:
