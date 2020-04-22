@@ -9,7 +9,7 @@ public class Program {
 		
 		//-----------HARD CODED OBJECTS------------------
 		int numOfCitizens = 50;
-		RoundManager round1 = new RoundManager(numOfCitizens, 2, 2, 1, "April",2019);
+		RoundManager round1 = new RoundManager(numOfCitizens, 2, 2, 1, "April", 2019);
 		
 		VotingStation [] allVotingStations = new VotingStation [2];
 		allVotingStations[0] = new VotingStation("Tel Aviv 15",50);
