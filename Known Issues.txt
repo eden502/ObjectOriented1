@@ -1,0 +1,11 @@
+Object oriented programmin task no.1
+Eden Harel - ID:205518178
+Dorel Saig - ID:308065176
+
+General:
+The entire program does not use insert validation. wrong values will cause a crash!
+
+Known issues:
+1.Use of display results (menu option 9) multiple times in a row will result a change in values.
+2.All military aged citizens ("soldiers") will be added to the first available military voting station.
+3.All corona patients will be added to the first available corona voting station.
