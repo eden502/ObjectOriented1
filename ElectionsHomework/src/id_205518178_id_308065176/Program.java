@@ -1,9 +1,9 @@
-package elections;
+package id_205518178_id_308065176;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import elections.Party.Wing;
+import id_205518178_id_308065176.Party.Wing;
 
 public class Program {
 
