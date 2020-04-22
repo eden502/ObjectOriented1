@@ -102,5 +102,6 @@ public class Program {
 			break;
 		}
 		 }while(choice!=10);
+		 scan.close();
 	}
 }
