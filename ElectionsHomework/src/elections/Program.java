@@ -84,7 +84,7 @@ public class Program {
 			break;
 		case 4:
 
-			// round1.addNewCandidate();
+			 round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[3],1);
 			break;
 		case 5:
 

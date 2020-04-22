@@ -32,6 +32,10 @@ public class Party {
 	public int getTotalVotes() {
 		return totalVotes;
 	}
+	
+	public int getSizeOfParty() {
+		return members.length;
+	}
 	@Override
 	public String toString() {
 
@@ -41,6 +45,34 @@ public class Party {
 
 	public void resetRound() {
 		this.totalVotes=0;
+	}
+
+	
+	// -------- Adding Member to Party By his Position - 
+	//check if position set in PartyMember been restricted -------- 
+	public void addMemberToParty(PartyMember Candidate) {
+		if (numOfPartyMembers<members.length) {
+		members[Candidate.getPosition()-1] = Candidate;
+		numOfPartyMembers++;
+		Candidate.setMember(true);
+		}
+		else {
+			int newLength = this.members.length * 2;
+			Object t = new Object[newLength];
+			t = fullArray(this.members);
+			this.members = new PartyMember[newLength];
+			System.arraycopy(t, 0, this.members, 0, newLength);
+			addMemberToParty(Candidate);
+		}
+		
+	}
+	
+	private Object[] fullArray(Object[] obj) {
+		Object[] temp = new Object[obj.length * 2];
+		System.arraycopy(obj, 0, temp, 0, obj.length);
+		// this.allVotingStations = new VotingStation[temp.length];
+		// System.arraycopy(temp, 0, this.allVotingStations, 0, temp.length);
+		return temp;
 	}
 
 }

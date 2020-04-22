@@ -11,6 +11,8 @@ public class RoundManager {
 	protected Citizen[] allCitizens;
 	protected Party[] allParties;
 	protected VotingStation[] allVotingStations;
+	protected CoronaVotingStation[] allCoronaVotingStations;
+	protected MilitaryVotingStation[] allMilitaryVotingStation;
 	private int numOfCitizensAdded, numOfPartiesAdded, numOfVotingStationsAdded;
 	private String month;
 	private int day, year;
@@ -21,6 +23,8 @@ public class RoundManager {
 		allCitizens = new Citizen[totalCitizens];
 		allParties = new Party[totalParties];
 		allVotingStations = new VotingStation[totalVotingStat];
+		allCoronaVotingStations = new CoronaVotingStation[1];
+		allMilitaryVotingStation = new MilitaryVotingStation[1];
 		numOfCitizensAdded = 0;
 		numOfPartiesAdded = 0;
 		this.day = day;
@@ -217,6 +221,33 @@ public class RoundManager {
 		}
 
 	}
+	
+	public void addNewCandidate(int id, int birthYear, String name, boolean isInIsolation,
+			Party memberOf, int stationType) {
+		if (numOfCitizensAdded < allCitizens.length) {
+			switch (stationType) {
+			case 1://regular voting station
+				allCitizens[numOfCitizensAdded] = new PartyMember(id, birthYear, name, numOfVotingStationsAdded,
+						isInIsolation, memberOf);
+				addCitizenToVotingStation(allCitizens[numOfCitizensAdded]);
+				memberOf.addMemberToParty((PartyMember)allCitizens[numOfCitizensAdded]);
+				numOfCitizensAdded++;
+				break;
+			case 2://corona voting station
+				
+				break;
+			}
+		} else {
+			int newLength = this.allCitizens.length * 2;
+			Object t = new Object[newLength];
+			t = fullArray(this.allCitizens);
+			this.allCitizens = new Citizen[newLength];
+			System.arraycopy(t, 0, this.allCitizens, 0, newLength);
+			addNewCitizen(id, birthYear, name, isInIsolation, stationType);
+		}
+
+		
+	}
 
 	// ----------------------------------------------------------------
 	// --------------------------Add Party---------------------------
@@ -300,5 +331,6 @@ public class RoundManager {
 				+ ", numOfCitizenAdded=" + numOfCitizensAdded + ", numOfPartiesAdded=" + numOfPartiesAdded
 				+ ", numOfVotingStationsAdded=" + numOfVotingStationsAdded + "]";
 	}
+
 
 }
