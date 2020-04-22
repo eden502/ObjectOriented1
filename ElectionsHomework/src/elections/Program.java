@@ -76,7 +76,7 @@ public class Program {
 			round1.addNewVotingStation("Beer Sheva ", 49,3);
 			break;
 		case 2:
-			 round1.addNewCitizen(55511114,1981,"Kobi",false,1);
+			 round1.addNewCitizen(55511114,2001,"Kobi",false,1);
 			break;
 		case 3:
 			LocalDate d = LocalDate.of(1950, 11, 26);
@@ -84,7 +84,7 @@ public class Program {
 			break;
 		case 4:
 
-			 round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[3],1);
+			 round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[1],1);
 			break;
 		case 5:
 

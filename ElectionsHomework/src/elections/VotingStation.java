@@ -11,6 +11,8 @@ public class VotingStation {
 	protected int[] results;
 	protected int numOfVotes;
 	protected final static String DEFAULT_ADDRESS = "Tel Aviv 15";
+	protected boolean corona;
+	protected boolean military;
 
 	
 	//---------------------C'tors---------------------
@@ -37,6 +39,7 @@ public class VotingStation {
 
 	public void addCitizen(Citizen citizen) {
 		this.voteList[numOfVotersAdded++] = citizen;
+		citizen.setVotingStation(stationId);
 
 	}
 	
@@ -67,9 +70,10 @@ public class VotingStation {
 
 	public String getStatistics() {
 		String s;
+		double percentage = 0;
 		if(numOfVotersAdded>0) {
-		double percentage = (double)(numOfVotes/numOfVotersAdded)*100;
-		s ="Vote percentage : "+percentage+"%\n";
+		percentage = (double)numOfVotes/numOfVotersAdded*100;
+		s ="Vote percentage : "+(int)percentage+"%\n";
 		return s;
 		}
 		else return "Vote percentage : 0%\n";
@@ -78,8 +82,19 @@ public class VotingStation {
 	public void resetRound() {
 		for (int i = 0; i < results.length; i++) {
 			results[i]=0;
+			numOfVotes = 0;
 		}
 		
+	}
+
+	public boolean setCorona() {
+		corona = true;
+		return true;
+	}
+
+	public boolean setMilitary() {
+		military = true;
+		return true;
 	}
 
 	

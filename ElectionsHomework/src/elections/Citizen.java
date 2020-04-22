@@ -69,6 +69,7 @@ public class Citizen {
 			if(isInIsolation) {
 				return 4;//Both soldier and in isolation
 			}
+			this.voteStation = numOfStations;
 			return 3;//returns military voting station
 		}
 		return 2;//isolation
