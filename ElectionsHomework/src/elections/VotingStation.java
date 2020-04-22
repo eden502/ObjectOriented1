@@ -4,10 +4,12 @@ package elections;
 public class VotingStation {
 
 	protected int numOfVotersAdded;
-	protected static int stationId;
+	protected static int counter;
+	protected int stationId;
 	protected Citizen[] voteList;
 	protected String address;
 	protected int[] results;
+	protected int numOfVotes;
 	protected final static String DEFAULT_ADDRESS = "Tel Aviv 15";
 
 	
@@ -20,7 +22,7 @@ public class VotingStation {
 	public VotingStation(String address, int listSize) {
 		this.address = address;
 		this.voteList = new Citizen[listSize];
-		stationId++;
+		stationId=++counter;
 
 	}
 	//--------------------Getters/Setters--------------
@@ -34,7 +36,7 @@ public class VotingStation {
 	}
 
 	public void addCitizen(Citizen citizen) {
-		voteList[numOfVotersAdded++] = citizen;
+		this.voteList[numOfVotersAdded++] = citizen;
 
 	}
 	
@@ -60,6 +62,24 @@ public class VotingStation {
 
 	public void castVote(int vote) {
 		results[vote]++;
+		numOfVotes++;
+	}
+
+	public String getStatistics() {
+		String s;
+		if(numOfVotersAdded>0) {
+		double percentage = (double)(numOfVotes/numOfVotersAdded)*100;
+		s ="Vote percentage : "+percentage+"%\n";
+		return s;
+		}
+		else return "Vote percentage : 0%\n";
+	}
+
+	public void resetRound() {
+		for (int i = 0; i < results.length; i++) {
+			results[i]=0;
+		}
+		
 	}
 
 	

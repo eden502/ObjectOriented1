@@ -39,4 +39,8 @@ public class Party {
 				+ "\nNumber of members: " + numOfPartyMembers + "\n";
 	}
 
+	public void resetRound() {
+		this.totalVotes=0;
+	}
+
 }

@@ -13,8 +13,9 @@ public class Citizen {
 
 	protected int id, birthYear, voteStation;
 	protected String name;
-	protected VotingStation votesWhere;
+	//protected VotingStation votesWhere;
 	protected boolean isInIsolation;
+	protected boolean isSoldier;
 
 	
 	
@@ -35,24 +36,43 @@ public class Citizen {
 		setId(id);
 		setBirthYear(birthYear);
 		setName(name);
-		setVotingStation(voteStation);
+		setStatus();
 		this.isInIsolation = isInIsolation;
+		setVotingStation(voteStation);
+		
+		
 	}
 	//----------------------------------------------------
 	
+	private void setStatus() {
+		if(CURRENT_YEAR-birthYear>=18&&CURRENT_YEAR-birthYear<=21) {
+			this.isSoldier=true;
+		}
+	}
+
 	//--------------------Getters/Setters-----------------
 	private void setName(String name) {
 		this.name = name;
 	}
-	public void setVotingStation(int numOfStations) {
+	public int setVotingStation(int numOfStations) {
 		/*
 		 * generates random number between 1 and total number of stations sets Citizen
 		 * voting station
 		 */
+		if(!isSoldier&&!isInIsolation&&numOfStations>1) {
 		Random randomGen = new Random();
 		int rand = randomGen.nextInt(numOfStations) + 1;
-
 		this.voteStation = rand;
+		return 1;// returns standard voting station
+		}
+		if(isSoldier) {
+			if(isInIsolation) {
+				return 4;//Both soldier and in isolation
+			}
+			return 3;//returns military voting station
+		}
+		return 2;//isolation
+		
 	}
 	public int getVotingStation() {
 		return voteStation;
