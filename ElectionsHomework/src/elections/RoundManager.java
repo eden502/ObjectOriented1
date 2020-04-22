@@ -11,10 +11,8 @@ public class RoundManager {
 	protected Citizen[] allCitizens;
 	protected Party[] allParties;
 	protected VotingStation[] allVotingStations;
-	//protected CoronaVotingStation[] allCoronaVotingStations;
-//	protected MilitaryVotingStation[] allMilitaryVotingStation;
 	private int numOfCitizensAdded, numOfPartiesAdded, numOfVotingStationsAdded;
-	private int numOfCoronaStations,numOfMilitaryStations;
+	private int numOfCoronaStations, numOfMilitaryStations;
 	private String month;
 	private int day, year;
 
@@ -24,17 +22,12 @@ public class RoundManager {
 		allCitizens = new Citizen[totalCitizens];
 		allParties = new Party[totalParties];
 		allVotingStations = new VotingStation[totalVotingStat];
-		//allCoronaVotingStations = new CoronaVotingStation[1];
-	//	allMilitaryVotingStation = new MilitaryVotingStation[1];
 		numOfCitizensAdded = 0;
 		numOfPartiesAdded = 0;
 		this.day = day;
 		this.month = month;
 		this.year = year;
 	}
-	// ------------------CITIZEN RELATED-------------------
-
-	// ----------------------------------------------------
 
 	// -------------------Getters/Setters--------------------
 
@@ -96,55 +89,29 @@ public class RoundManager {
 		}
 		return true;
 	}
-//
-//	public boolean createCitizens(Citizen citizen_new) {
-//		allCitizens[numOfCitizenAdded++] = citizen_new;
-//			
-//		}
-//		
-//		for (int i = 0; i < allCitizens.length; i++) {
-//			allCitizens[i].id = id++;
-//			allCitizens[i].birthYear=2002;
-//			allCitizens[i].name = names[i]; 
-//			allCitizens[i].isInIsolation = false;
-//		}
-//	}
-//	
-//	public boolean createVotingStations() {
-//		return false;
-//	}
 
-	public void addCitizensList(Citizen c1) {
-		// this.allCitizens = allCitizens2;
-		// numOfCitizensAdded = allCitizens2.length;
+	public boolean addCitizensList(Citizen c1) {
 		this.allCitizens[numOfCitizensAdded] = c1;
 		numOfCitizensAdded++;
+		return true;
 	}
 
-//----------------------Old set voting station-------------------------
-//	public void setCitizenVotingStation() {
-//		for (int i = 0; i < numOfCitizenAdded; i++) {
-//			allCitizens[i].setVotingStation(numOfVotingStationsAdded, allVotingStations);
-//			
-//		}
-//	}
-//---------------------------------------------------------------------
 
 	private void addCitizenToVotingStation(Citizen c1) {
-		if(!c1.isInIsolation&&!c1.isSoldier) {
-		allVotingStations[c1.getVotingStation() - 1].addCitizen(c1);
+		if (!c1.isInIsolation && !c1.isSoldier) {
+			allVotingStations[c1.getVotingStation() - 1].addCitizen(c1);
 		}
-		if(c1.isInIsolation) {
-			for (int i = 0; i <numOfVotingStationsAdded; i++) {
-				if(allVotingStations[i].corona) {
+		if (c1.isInIsolation) {
+			for (int i = 0; i < numOfVotingStationsAdded; i++) {
+				if (allVotingStations[i].corona) {
 					allVotingStations[i].addCitizen(c1);
 					break;
 				}
 			}
 		}
-		if(c1.isSoldier) {
-			for (int i = 0; i <numOfVotingStationsAdded; i++) {
-				if(allVotingStations[i].military) {
+		if (c1.isSoldier) {
+			for (int i = 0; i < numOfVotingStationsAdded; i++) {
+				if (allVotingStations[i].military) {
 					allVotingStations[i].addCitizen(c1);
 					break;
 				}
@@ -152,9 +119,10 @@ public class RoundManager {
 		}
 	}
 
-	public void addVotingStationList(VotingStation[] allVotingStations) {
+	public boolean addVotingStationList(VotingStation[] allVotingStations) {
 		this.allVotingStations = allVotingStations;
 		numOfVotingStationsAdded = allVotingStations.length;
+		return true;
 	}
 
 //-------------------Add Voting Stations------------------------------
@@ -165,7 +133,6 @@ public class RoundManager {
 				allVotingStations[numOfVotingStationsAdded] = new VotingStation(address, listSize);
 				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
 				numOfVotingStationsAdded++;
-				updateStationLists();
 				break;
 			case 2:// corona voting station
 				allVotingStations[numOfVotingStationsAdded] = new CoronaVotingStation(address, listSize);
@@ -173,7 +140,6 @@ public class RoundManager {
 				allVotingStations[numOfVotingStationsAdded].setCorona();
 				numOfVotingStationsAdded++;
 				numOfCoronaStations++;
-				updateStationLists();
 				break;
 
 			case 3:// military voting station
@@ -182,7 +148,6 @@ public class RoundManager {
 				allVotingStations[numOfVotingStationsAdded].setMilitary();
 				numOfVotingStationsAdded++;
 				numOfMilitaryStations++;
-				updateStationLists();
 				break;
 			}
 		}
@@ -198,17 +163,9 @@ public class RoundManager {
 
 	}
 
-	private void updateStationLists() {
-		for (int i = 0; i < numOfCitizensAdded; i++) {
-
-		}
-	}
-
 	private Object[] fullArray(Object[] obj) {
 		Object[] temp = new Object[obj.length * 2];
 		System.arraycopy(obj, 0, temp, 0, obj.length);
-		// this.allVotingStations = new VotingStation[temp.length];
-		// System.arraycopy(temp, 0, this.allVotingStations, 0, temp.length);
 		return temp;
 	}
 
@@ -216,34 +173,9 @@ public class RoundManager {
 	public void addNewCitizen(int id, int birthYear, String name, boolean isInIsolation, int stationType) {
 
 		if (numOfCitizensAdded < allCitizens.length) {
-			allCitizens[numOfCitizensAdded] = new Citizen(id, birthYear, name, numOfVotingStationsAdded,
-					isInIsolation);
+			allCitizens[numOfCitizensAdded] = new Citizen(id, birthYear, name, numOfVotingStationsAdded, isInIsolation);
 			addCitizenToVotingStation(allCitizens[numOfCitizensAdded]);
 			numOfCitizensAdded++;
-//			switch (stationType) {
-//			case 1:// regular voting station
-//				allCitizens[numOfCitizensAdded] = new Citizen(id, birthYear, name, numOfVotingStationsAdded,
-//						isInIsolation);
-//				addCitizenToVotingStation(allCitizens[numOfCitizensAdded]);
-//				numOfCitizensAdded++;
-//				break;
-//			case 2:// corona voting station
-//				allCitizens[numOfCitizensAdded] = new Citizen(id, birthYear, name, numOfVotingStationsAdded,
-//						isInIsolation);
-//				addCitizenToVotingStation(allCitizens[numOfCitizensAdded]);
-//				numOfCitizensAdded++;
-//				break;
-//			case 3:// military voting station
-//				allCitizens[numOfCitizensAdded] = new Citizen(id, birthYear, name, numOfVotingStationsAdded,
-//						isInIsolation);
-//				addCitizenToVotingStation(allCitizens[numOfCitizensAdded]);
-//				numOfCitizensAdded++;
-//				break;
-//
-//			case 4: // military corona voting station
-//
-//				break;
-//			}
 		} else {
 			int newLength = this.allCitizens.length * 2;
 			Object t = new Object[newLength];

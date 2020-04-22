@@ -37,17 +37,11 @@ public class Program {
 		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs", false);
 		allCitizens[9] = new Citizen(121212121, 1993, "Sasdg", false);
 		
-		//for (int i = 0; i < allCitizens.length; i++) {
-		//	round1.addCitizensList(allCitizens[i]);
-			//round1.setCitizenVotingStation(allCitizens[i]);
-	//	}
-		//round1.addCitizensList(allCitizens);
 		round1.addVotingStationList(allVotingStations);
 		for (int i = 0; i < allCitizens.length; i++) {
 			round1.addCitizensList(allCitizens[i]);
 			round1.setCitizenVotingStation(allCitizens[i]);
 		}
-		//round1.setCitizenVotingStation();
 		round1.setParties(allParties);
 
 		// -----------------Menu------------------------
@@ -66,8 +60,7 @@ public class Program {
 		// ---------------------------------------------
 
 		Scanner scan = new Scanner(System.in);
-		// System.out.println(round1.toString());
-		 int choice ;//= scan.nextInt();
+		 int choice ;
 		 do {
 			
 			 choice = scan.nextInt();
@@ -100,11 +93,8 @@ public class Program {
 			break;
 		case 8:
 			round1.startVote();
-			System.out.println(round1.results());
-
 			break;
 		case 9:
-
 			System.out.println(round1.results());
 			break;
 		case 10:

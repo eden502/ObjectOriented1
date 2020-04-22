@@ -22,13 +22,14 @@ public class PartyMember extends Citizen {
 	}
 
 
-	public void setPosition(int position) {
+	public boolean setPosition(int position) {
 		this.position = position;
-
+		return true;
 	}
 
-	public void setMember(boolean isMember) {
+	public boolean setMember(boolean isMember) {
 		this.isMember = isMember;
+		return true;
 	}
 
 
