@@ -1,5 +1,6 @@
 package id_205518178_id_308065176;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Vector;
 
@@ -31,6 +32,7 @@ public class VotingStation {
 		setAddress(address);
 		corona = corStat;
 		military = milStat;
+		citizens = new Vector<Citizen>();
 		stationId=++counter;
 	}
 
@@ -64,7 +66,7 @@ public class VotingStation {
 		str.append("\n----------------------");
 		str.append("\nVoting Station ID: " + stationId + "\nAddress: " + address);
 
-		for (int i = 0; i < numOfVotersAdded; i++) {
+		for (int i = 0; i < citizens.size(); i++) {
 			str.append("\n" + citizens.get(i));
 
 		}
@@ -81,8 +83,8 @@ public class VotingStation {
 	public String getStatistics() {
 		String s;
 		double percentage = 0;
-		if(numOfVotersAdded>0) {
-		percentage = (double)numOfVotes/numOfVotersAdded*100;
+		if(citizens.size()>0) {
+		percentage = (double)numOfVotes/citizens.size()*100;
 		s ="Vote percentage : "+(int)percentage+"%\n";
 		return s;
 		}
@@ -109,6 +111,12 @@ public class VotingStation {
 
 	public void addVoter(Citizen c) {
 		citizens.add(c);
+	}
+	public void updateNumOfParties(int num) {
+		int [] temp = new int [results.length+1];
+		System.arraycopy(results, 0, temp, 0, temp.length);
+		results = new int [temp.length];
+		results = temp;
 	}
 
 	

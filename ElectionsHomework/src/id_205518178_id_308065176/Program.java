@@ -42,7 +42,11 @@ public class Program {
 		
 		
 		
-		round1.addVotingStationList(allVotingStations);
+		//round1.addVotingStationList(allVotingStations);
+		for (int i = 0; i < allVotingStations.length; i++) {
+			round1.addVotingStation(allVotingStations[i]);
+			
+		}
 		for (int i = 0; i < allCitizens.length; i++) {
 			round1.addCitizen(allCitizens[i]);
 			round1.setCitizenVotingStation(allCitizens[i]);
@@ -77,15 +81,15 @@ public class Program {
 			round1.addVotingStation("Beer Sheva",false,true);
 			break;
 		case 2:
-			 round1.addNewCitizen(55511114,2001,"Kobi",false,1);
+			// round1.addNewCitizen(55511114,2001,"Kobi",false,1);
 			break;
 		case 3:
 			LocalDate d = LocalDate.of(1950, 11, 26);
-			 round1.addNewParty("Avoda",d,Wing.Left);
+		//	 round1.addNewParty("Avoda",d,Wing.Left);
 			break;
 		case 4:
 
-			 round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[1],1);
+			// round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[1],1);
 			break;
 		case 5:
 
@@ -97,7 +101,7 @@ public class Program {
 			break;
 		case 7:
 
-			System.out.println(round1.showAllParties());
+		//	System.out.println(round1.showAllParties());
 			break;
 		case 8:
 			round1.startVote();
