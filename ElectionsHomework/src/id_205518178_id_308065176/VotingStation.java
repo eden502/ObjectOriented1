@@ -1,12 +1,13 @@
 package id_205518178_id_308065176;
 
+import java.util.Vector;
 
 public class VotingStation {
 
 	protected int numOfVotersAdded;
 	protected static int counter;
 	protected int stationId;
-	protected Citizen[] voteList;
+	protected Vector<Citizen> citizens;
 	protected String address;
 	protected int[] results;
 	protected int numOfVotes;
@@ -23,7 +24,6 @@ public class VotingStation {
 
 	public VotingStation(String address, int listSize) {
 		this.address = address;
-		this.voteList = new Citizen[listSize];
 		stationId=++counter;
 
 	}
@@ -38,9 +38,7 @@ public class VotingStation {
 	}
 
 	public void addCitizen(Citizen citizen) {
-		this.voteList[numOfVotersAdded++] = citizen;
-		citizen.setVotingStation(stationId);
-
+		citizens.add(citizen);
 	}
 	
 	public int [] getVotingStationResults() {
@@ -58,7 +56,7 @@ public class VotingStation {
 			str.append("\n" + voteList[i]);
 
 		}
-		return "" + str;
+		return "" + str+"\n";
 	}
 
 	

@@ -1,5 +1,9 @@
 package id_205518178_id_308065176;
 
+//Eden Harel ID:205518178
+//Dorel Saig ID:308065176
+
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -35,7 +39,9 @@ public class Program {
 		allCitizens[6] = new Citizen(777777777, 1990, "Bwer", false);
 		allCitizens[7] = new Citizen(888888888, 1991, "Rhf", false);
 		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs", false);
-		allCitizens[9] = new Citizen(121212121, 1993, "Sasdg", false);
+		allCitizens[9] = allCitizens[8];
+		
+		
 		
 		round1.addVotingStationList(allVotingStations);
 		for (int i = 0; i < allCitizens.length; i++) {

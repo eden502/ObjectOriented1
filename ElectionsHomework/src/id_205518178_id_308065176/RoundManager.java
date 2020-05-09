@@ -3,103 +3,201 @@ package id_205518178_id_308065176;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Vector;
 
 import id_205518178_id_308065176.Party.Wing;
+import keren.Citizen;
+import keren.SickCitizen;
+import keren.SickSoldier;
+import keren.Soldier;
 
 public class RoundManager {
 
-	protected Citizen[] allCitizens;
-	protected Party[] allParties;
-	protected VotingStation[] allVotingStations;
-	private int numOfCitizensAdded, numOfPartiesAdded, numOfVotingStationsAdded;
-	private int numOfCoronaStations, numOfMilitaryStations;
+//	protected Citizen[] allCitizens;
+//	protected Party[] allParties;
+//	protected VotingStation[] allVotingStations;
+//	private int numOfCitizensAdded, numOfPartiesAdded, numOfVotingStationsAdded;
+//	private int numOfCoronaStations, numOfMilitaryStations;
 	private String month;
-	private int day, year;
+	private int year;
 
-	// ------------------RoundManager C'tor-------------------
-	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber, int day,
-			String month, int year) {
-		allCitizens = new Citizen[totalCitizens];
-		allParties = new Party[totalParties];
-		allVotingStations = new VotingStation[totalVotingStat];
-		numOfCitizensAdded = 0;
-		numOfPartiesAdded = 0;
-		this.day = day;
-		this.month = month;
-		this.year = year;
+	// ---------------------------USING VECTORS-------------------------------
+
+	private Vector<Citizen> allCitizens;
+	private Vector<VotingStation> healthyCitizens;
+	private Vector<VotingStation> sickCitizens;
+	private Vector<VotingStation> soldiers;
+	private Vector<VotingStation> sickSoldiers;
+	private Vector<Party> allParties;
+
+	public RoundManager(int roundNumber, String month, int year) {
+		allCitizens = new Vector<Citizen>();
+		healthyCitizens = new Vector<VotingStation>();
+		sickCitizens = new Vector<VotingStation>();
+		soldiers = new Vector<VotingStation>();
+		sickSoldiers = new Vector<VotingStation>();
+		allParties = new Vector<Party>();
+		setMonth(month);	//add methods
+		setYear(year);	// add methods
+
 	}
+	
 
-	// -------------------Getters/Setters--------------------
-
+	public boolean addCitizen(Citizen c) {	//check if voting station of each type will be created on first run
+		allCitizens.add(c);
+		
+		Random rand = new Random();
+		if (c.getClass() == Soldier.class) {
+			soldiers.get(rand.nextInt(soldiers.size())).addVoter(c);
+			
+		} else if (c.getClass() == SickSoldier.class) {
+			sickSoldiers.get(rand.nextInt(sickSoldiers.size())).addVoter(c);
+		} else if (c.getClass() == Citizen.class) {
+			healthyCitizens.get(rand.nextInt(healthyCitizens.size())).addVoter(c);
+		} else if (c.getClass() == SickCitizen.class) {
+			sickCitizens.get(rand.nextInt(sickCitizens.size())).addVoter(c);
+		}
+		
+	}
+	
+	public void addVotingStation(VotingStation station) {
+		if(station.corona) {		
+			if(station.military) {
+				sickSoldiers.add(station);
+				return;
+			}
+			sickCitizens.add(station);
+			return;
+		}
+		if(station.military) {
+			soldiers.add(station);
+			return;
+		}
+		healthyCitizens.add(station);
+	}
+	
+	public void addParty(Party p) {
+		allParties.add(p);
+	}
+	
+	
 	public int getNumOfParties() {
-		return allParties.length;
+		return allParties.size();
 	}
 
 	public int getYear() {
 		return this.year;
 	}
-
-	public void setCitizenVotingStation(Citizen c1) {
-		c1.setVotingStation(numOfVotingStationsAdded);
-		// addCitizensList(c1);
-		this.allVotingStations[c1.voteStation - 1].addCitizen(c1);
-//		for (int i = 0; i < numOfCitizensAdded; i++) {
-//			allCitizens[i].setVotingStation(numOfVotingStationsAdded);
-//			addCitizenToVotingStation(allCitizens[i]);
-
-		// }
-	}
-
+	
 	public String getVotingStations() {
-		StringBuffer str = new StringBuffer();
-		str.append("Showing all voting stations: \n");
-		for (int i = 0; i < numOfVotingStationsAdded; i++) {
-			str.append(allVotingStations[i].toString());
+		return healthyCitizens.toString()+sickCitizens.toString()+soldiers.toString()+sickSoldiers.toString();
+	}
+	public String getAllCitizens() {
+		return allCitizens.toString();
+	}
+	public String getAllParties() {
+		return allParties.toString();
+	}
+	
+	public void setCitizenVotingStation(Citizen c1) {
+		if (c1.isInIsolation) {
+			if(c1.isSoldier) {
+				c1.setVotingStation(sickSoldiers.size());
+				return;
+			}
+			c1.setVotingStation(sickCitizens.size());
+			return;
 		}
-		return "" + str;
-	}
-
-	public StringBuffer getAllCitizens() {
-		StringBuffer ctzn = new StringBuffer();
-		ctzn.append("List of all citizens: \n");
-		for (int i = 0; i < numOfCitizensAdded; i++) {
-			ctzn.append("------------------------\n");
-			ctzn.append(allCitizens[i].toString());
+		if(c1.isSoldier) {
+			c1.setVotingStation(soldiers.size());
+			return;
 		}
-		return ctzn;
+		c1.setVotingStation(healthyCitizens.size());		
+//		c1.setVotingStation(numOfVotingStationsAdded);
+//		// addCitizensList(c1);
+//		this.allVotingStations[c1.voteStation - 1].addCitizen(c1);
+////		for (int i = 0; i < numOfCitizensAdded; i++) {
+////			allCitizens[i].setVotingStation(numOfVotingStationsAdded);
+////			addCitizenToVotingStation(allCitizens[i]);
+//
+//		// }
 	}
+	
+	
+	
+	
+	
+	
 
-	public StringBuffer showAllParties() {
-		StringBuffer pty = new StringBuffer();
-		pty.append("Registered Parties:\n");
-		for (int i = 0; i < numOfPartiesAdded; i++) {
-			pty.append("-----------------------------\n");
-			pty.append(allParties[i].toString());
-			pty.append("-----------------------------\n");
-		}
+	// ------------------------------------------------------------------------
+	// ------------------RoundManager C'tor-------------------
+//	public RoundManager(int totalCitizens, int totalVotingStat, int totalParties, int roundNumber, int day,
+//			String month, int year) {
+//		allCitizens = new Citizen[totalCitizens];
+//		allParties = new Party[totalParties];
+//		allVotingStations = new VotingStation[totalVotingStat];
+//		numOfCitizensAdded = 0;
+//		numOfPartiesAdded = 0;
+//		this.day = day;
+//		this.month = month;
+//		this.year = year;
+//	}
 
-		return pty;
-	}
+	// -------------------Getters/Setters--------------------
 
-	public boolean setParties(Party[] allParties) {
-		this.allParties = allParties;
-		numOfPartiesAdded = allParties.length;
-		for (int i = 0; i < allVotingStations.length; i++) {
-			allVotingStations[i].setNumOfParties(numOfPartiesAdded);
-		}
-		return true;
-	}
 
-	public boolean addCitizensList(Citizen c1) {
-		this.allCitizens[numOfCitizensAdded] = c1;
-		numOfCitizensAdded++;
-		return true;
-	}
 
+
+
+//	public String getVotingStations() {
+//		StringBuffer str = new StringBuffer();
+//		str.append("Showing all voting stations: \n");
+//		for (int i = 0; i < numOfVotingStationsAdded; i++) {
+//			str.append(allVotingStations[i].toString());
+//		}
+//		return "" + str;
+//	}
+
+//	public StringBuffer getAllCitizens() {
+//		StringBuffer ctzn = new StringBuffer();
+//		ctzn.append("List of all citizens: \n");
+//		for (int i = 0; i < numOfCitizensAdded; i++) {
+//			ctzn.append("------------------------\n");
+//			ctzn.append(allCitizens[i].toString());
+//		}
+//		return ctzn;
+//	}
+
+//	public StringBuffer showAllParties() {
+//		StringBuffer pty = new StringBuffer();
+//		pty.append("Registered Parties:\n");
+//		for (int i = 0; i < numOfPartiesAdded; i++) {
+//			pty.append("-----------------------------\n");
+//			pty.append(allParties[i].toString());
+//			pty.append("-----------------------------\n");
+//		}
+//
+//		return pty;
+//	}
+//
+//	public boolean setParties(Party[] allParties) {
+//		this.allParties = allParties;
+//		numOfPartiesAdded = allParties.length;
+//		for (int i = 0; i < allVotingStations.length; i++) {
+//			allVotingStations[i].setNumOfParties(numOfPartiesAdded);
+//		}
+//		return true;
+//	}
+
+//	public boolean addCitizensList(Citizen c1) {
+//		this.allCitizens[numOfCitizensAdded] = c1;
+//		numOfCitizensAdded++;
+//		return true;
+//	}
 
 	private void addCitizenToVotingStation(Citizen c1) {
 		if (!c1.isInIsolation && !c1.isSoldier) {
-			allVotingStations[c1.getVotingStation() - 1].addCitizen(c1);
+			c1.getVotingStation()
 		}
 		if (c1.isInIsolation) {
 			for (int i = 0; i < numOfVotingStationsAdded; i++) {
@@ -125,49 +223,49 @@ public class RoundManager {
 		return true;
 	}
 
-//-------------------Add Voting Stations------------------------------
-	public void addNewVotingStation(String address, int listSize, int type) {
-		if (numOfVotingStationsAdded < allVotingStations.length) {
-			switch (type) {
-			case 1:// regular voting station
-				allVotingStations[numOfVotingStationsAdded] = new VotingStation(address, listSize);
-				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
-				numOfVotingStationsAdded++;
-				break;
-			case 2:// corona voting station
-				allVotingStations[numOfVotingStationsAdded] = new CoronaVotingStation(address, listSize);
-				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
-				allVotingStations[numOfVotingStationsAdded].setCorona();
-				numOfVotingStationsAdded++;
-				numOfCoronaStations++;
-				break;
-
-			case 3:// military voting station
-				allVotingStations[numOfVotingStationsAdded] = new MilitaryVotingStation(address, listSize);
-				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
-				allVotingStations[numOfVotingStationsAdded].setMilitary();
-				numOfVotingStationsAdded++;
-				numOfMilitaryStations++;
-				break;
-			}
-		}
-
-		else {
-			int newLength = this.allVotingStations.length * 2;
-			Object t = new Object[newLength];
-			t = fullArray(this.allVotingStations);
-			this.allVotingStations = new VotingStation[newLength];
-			System.arraycopy(t, 0, this.allVotingStations, 0, newLength);
-			addNewVotingStation(address, listSize, type);
-		}
-
-	}
-
-	private Object[] fullArray(Object[] obj) {
-		Object[] temp = new Object[obj.length * 2];
-		System.arraycopy(obj, 0, temp, 0, obj.length);
-		return temp;
-	}
+////-------------------Add Voting Stations------------------------------
+//	public void addNewVotingStation(String address, int listSize, int type) {
+//		if (numOfVotingStationsAdded < allVotingStations.length) {
+//			switch (type) {
+//			case 1:// regular voting station
+//				allVotingStations[numOfVotingStationsAdded] = new VotingStation(address, listSize);
+//				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
+//				numOfVotingStationsAdded++;
+//				break;
+//			case 2:// corona voting station
+//				allVotingStations[numOfVotingStationsAdded] = new CoronaVotingStation(address, listSize);
+//				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
+//				allVotingStations[numOfVotingStationsAdded].setCorona();
+//				numOfVotingStationsAdded++;
+//				numOfCoronaStations++;
+//				break;
+//
+//			case 3:// military voting station
+//				allVotingStations[numOfVotingStationsAdded] = new MilitaryVotingStation(address, listSize);
+//				allVotingStations[numOfVotingStationsAdded].setNumOfParties(numOfPartiesAdded);
+//				allVotingStations[numOfVotingStationsAdded].setMilitary();
+//				numOfVotingStationsAdded++;
+//				numOfMilitaryStations++;
+//				break;
+//			}
+//		}
+//
+//		else {
+//			int newLength = this.allVotingStations.length * 2;
+//			Object t = new Object[newLength];
+//			t = fullArray(this.allVotingStations);
+//			this.allVotingStations = new VotingStation[newLength];
+//			System.arraycopy(t, 0, this.allVotingStations, 0, newLength);
+//			addNewVotingStation(address, listSize, type);
+//		}
+//
+//	}
+//
+//	private Object[] fullArray(Object[] obj) {
+//		Object[] temp = new Object[obj.length * 2];
+//		System.arraycopy(obj, 0, temp, 0, obj.length);
+//		return temp;
+//	}
 
 	// --------------------------Add Citizen---------------------------
 	public void addNewCitizen(int id, int birthYear, String name, boolean isInIsolation, int stationType) {

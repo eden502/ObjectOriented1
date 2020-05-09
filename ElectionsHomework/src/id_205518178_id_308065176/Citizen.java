@@ -10,7 +10,7 @@ public class Citizen {
 	protected static final int DEFAULT_NUM_OF_VOTING_STATIONS = 1;
 	protected static final boolean DEFAULT_ISOLATION_STATUS = false;
 	protected static final String DEFAULT_NAME = "CTZN";
-
+	
 	protected int id, birthYear, voteStation;
 	protected String name;
 	protected boolean isInIsolation;
@@ -45,26 +45,15 @@ public class Citizen {
 		this.name = name;
 	}
 
-	public int setVotingStation(int numOfStations) {
+	public void setVotingStation(int numOfStations) {
 		/*
 		 * generates random number between 1 and total number of stations sets Citizen
 		 * voting station
 		 */
-		if (!isSoldier && !isInIsolation && numOfStations > 1) {
 			Random randomGen = new Random();
-			int rand = randomGen.nextInt(numOfStations) + 1;
+			int rand = randomGen.nextInt(numOfStations);
 			this.voteStation = rand;
-			return 1;// returns standard voting station
-		}
-		if (isSoldier) {
-			if (isInIsolation) {
-				return 4;// Both soldier and in isolation
-			}
-			this.voteStation = numOfStations;
-			return 3;// returns military voting station
-		}
-		return 2;// isolation
-
+	
 	}
 
 	public int getVotingStation() {
