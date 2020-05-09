@@ -1,10 +1,10 @@
 package id_205518178_id_308065176;
 
+import java.util.InputMismatchException;
 import java.util.Vector;
 
 public class VotingStation {
 
-	protected int numOfVotersAdded;
 	protected static int counter;
 	protected int stationId;
 	protected Vector<Citizen> citizens;
@@ -18,16 +18,25 @@ public class VotingStation {
 	
 	//---------------------C'tors---------------------
 	public VotingStation() {
-		this(DEFAULT_ADDRESS,50);
+		this(DEFAULT_ADDRESS,false,false);
 
 	}
-
-	public VotingStation(String address, int listSize) {
-		this.address = address;
+	public VotingStation(String address) {
+		this(address,false,false);
+	}
+	public VotingStation(String address,boolean corStat) {
+		this(address,corStat,false);
+	}
+	public VotingStation(String address,boolean corStat, boolean milStat) {
+		setAddress(address);
+		corona = corStat;
+		military = milStat;
 		stationId=++counter;
-
 	}
+
+	
 	//--------------------Getters/Setters--------------
+	
 
 	public int getStationId() {
 		return this.stationId;
@@ -44,6 +53,9 @@ public class VotingStation {
 	public int [] getVotingStationResults() {
 		return results;
 	}
+	private void setAddress(String address) {//Consider using exception
+			this.address = address;
+	}
 	//--------------------------------------------------
 
 	@Override
@@ -53,7 +65,7 @@ public class VotingStation {
 		str.append("\nVoting Station ID: " + stationId + "\nAddress: " + address);
 
 		for (int i = 0; i < numOfVotersAdded; i++) {
-			str.append("\n" + voteList[i]);
+			str.append("\n" + citizens.get(i));
 
 		}
 		return "" + str+"\n";
@@ -93,6 +105,10 @@ public class VotingStation {
 	public boolean setMilitary() {
 		military = true;
 		return true;
+	}
+
+	public void addVoter(Citizen c) {
+		citizens.add(c);
 	}
 
 	

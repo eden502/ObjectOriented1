@@ -14,12 +14,11 @@ public class Program {
 	public static void main(String[] args) {
 
 		// -----------HARD CODED OBJECTS------------------
-		int numOfCitizens = 50;
-		RoundManager round1 = new RoundManager(numOfCitizens, 2, 2, 3, 30, "April", 2020);
+		RoundManager round1 = new RoundManager(1, 2, 2017);
 
 		VotingStation[] allVotingStations = new VotingStation[2];
-		allVotingStations[0] = new VotingStation("Tel Aviv 15", 50);
-		allVotingStations[1] = new VotingStation("Rosh Pina 46", 50);
+		allVotingStations[0] = new VotingStation("Tel Aviv 15");
+		allVotingStations[1] = new VotingStation("Rosh Pina 46");
 
 		Party[] allParties = new Party[3];
 		LocalDate likud = LocalDate.of(1988, 4, 25);
@@ -45,10 +44,13 @@ public class Program {
 		
 		round1.addVotingStationList(allVotingStations);
 		for (int i = 0; i < allCitizens.length; i++) {
-			round1.addCitizensList(allCitizens[i]);
+			round1.addCitizen(allCitizens[i]);
 			round1.setCitizenVotingStation(allCitizens[i]);
 		}
-		round1.setParties(allParties);
+		for (int i = 0; i < allParties.length; i++) {
+			round1.addParty(allParties[i]);
+		}
+		
 
 		// -----------------Menu------------------------
 		System.out.println(round1.getYear() + " Election system:");
@@ -72,7 +74,7 @@ public class Program {
 			 choice = scan.nextInt();
 		switch (choice) {
 		case 1:
-			round1.addNewVotingStation("Beer Sheva ", 49,3);
+			round1.addVotingStation("Beer Sheva",false,true);
 			break;
 		case 2:
 			 round1.addNewCitizen(55511114,2001,"Kobi",false,1);
