@@ -11,15 +11,16 @@ import id_205518178_id_308065176.Party.Wing;
 
 public class Program {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		// -----------HARD CODED OBJECTS------------------
 		RoundManager round1 = new RoundManager(1, 2, 2017);
 
-		VotingStation[] allVotingStations = new VotingStation[2];
-		allVotingStations[0] = new VotingStation("Tel Aviv 15");
-		allVotingStations[1] = new VotingStation("Rosh Pina 46");
-
+		VotingStation[] allVotingStations = new VotingStation[3];
+		allVotingStations[0] = new VotingStation("Tel Aviv 15",true,false);
+		allVotingStations[1] = new VotingStation("Rosh Pina 46",false,true);
+		allVotingStations[2] = new VotingStation("Rasfana 14",false,false);
+		
 		Party[] allParties = new Party[3];
 		LocalDate likud = LocalDate.of(1988, 4, 25);
 		LocalDate meretz = LocalDate.of(2002, 6, 14); 
@@ -29,16 +30,16 @@ public class Program {
 		allParties[2] = new Party("Kahol Lavan", KL, Wing.Center);
 
 		Citizen[] allCitizens = new Citizen[10];
-		allCitizens[4] = new Citizen(555555555, 1989, "Hob", false);
+		allCitizens[0] = new Soldier(555555555, 1989, "Hob", false, false);
 		allCitizens[1] = new Citizen(111111111, 1990, "Bob", false);
 		allCitizens[2] = new Citizen(222222222, 1991, "Rob", false);
 		allCitizens[3] = new Citizen(333333333, 1992, "Kob", false);
-		allCitizens[0] = new Citizen(444444444, 1993, "Sob", false);
+		allCitizens[4] = new Citizen(444444444, 1993, "Sob", false);
 		allCitizens[5] = new Citizen(666666666, 1989, "erob", false);
 		allCitizens[6] = new Citizen(777777777, 1990, "Bwer", false);
 		allCitizens[7] = new Citizen(888888888, 1991, "Rhf", false);
 		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs", false);
-		allCitizens[9] = allCitizens[8];
+		allCitizens[9] = new SickCitizen(123456789,1992,"sick",true,11);
 		
 		
 		

@@ -90,25 +90,32 @@ public class RoundManager {
 		}
 	}
 
+	
 	public void addCitizen(Citizen c) { // check if voting station of each type will be created on first run
+		try {
 		allCitizens.add(c);
+		System.out.println(c.getClass());
 
 		Random rand = new Random();
 		int r;
 		if (c.getClass() == Soldier.class) {
 			soldiers.get(r=rand.nextInt(soldiers.size())).addVoter(c);
-			c.setVotingStation(soldiers.get(r).stationId);
+			((Soldier) c).setVotingStation(soldiers.get(r).stationId);
 		} else if (c.getClass() == SickSoldier.class) {
 			sickSoldiers.get(r=rand.nextInt(sickSoldiers.size())).addVoter(c);
-			c.setVotingStation(sickSoldiers.get(r).stationId);
+			((SickSoldier) c).setVotingStation(sickSoldiers.get(r).stationId);
 		} else if (c.getClass() == Citizen.class) {
 			healthyCitizens.get(r=rand.nextInt(healthyCitizens.size())).addVoter(c);
-			c.setVotingStation(healthyCitizens.get(r).stationId);
+			((Citizen) c).setVotingStation(healthyCitizens.get(r).stationId);
 		} else if (c.getClass() == SickCitizen.class) {
 			sickCitizens.get(r=rand.nextInt(sickCitizens.size())).addVoter(c);
-			c.setVotingStation(sickCitizens.get(r).stationId);
+			//sickCitizens.get(0).addVoter(c);
+			((SickCitizen) c).setVotingStation(sickCitizens.get(0).stationId);
 		}
-
+		}catch (IllegalArgumentException e) {
+			System.out.println("Trying to add a citizen to a voting station type that does not exist");
+		}
+		
 	}
 
 	public void addVotingStation(String adr, boolean corStat, boolean milStat) { // method receives votingStation
@@ -118,7 +125,7 @@ public class RoundManager {
 	}
 
 	public void addVotingStation(VotingStation station) {// method adds an already existing voting station
-		if (station.corona) {
+
 			if (station.military) {
 				sickSoldiers.add(station);
 				return;

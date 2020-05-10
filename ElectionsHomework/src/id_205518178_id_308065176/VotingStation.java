@@ -8,7 +8,7 @@ public class VotingStation {
 
 	protected static int counter;
 	protected int stationId;
-	protected Vector<Citizen> citizens;
+	protected Vector<Citizen> voters;
 	protected String address;
 	protected int[] results;
 	protected int numOfVotes;
@@ -32,7 +32,7 @@ public class VotingStation {
 		setAddress(address);
 		corona = corStat;
 		military = milStat;
-		citizens = new Vector<Citizen>();
+		voters = new Vector<Citizen>();
 		stationId=++counter;
 	}
 
@@ -48,9 +48,9 @@ public class VotingStation {
 		this.results = new int [numOfPartiesAdded];
 	}
 
-	public void addCitizen(Citizen citizen) {
-		citizens.add(citizen);
-	}
+//	public void addCitizen(Citizen citizen) {
+//		voters.add(citizen);
+//	}
 	
 	public int [] getVotingStationResults() {
 		return results;
@@ -66,8 +66,8 @@ public class VotingStation {
 		str.append("\n----------------------");
 		str.append("\nVoting Station ID: " + stationId + "\nAddress: " + address);
 
-		for (int i = 0; i < citizens.size(); i++) {
-			str.append("\n" + citizens.get(i));
+		for (int i = 0; i < voters.size(); i++) {
+			str.append("\n" + voters.get(i));
 
 		}
 		return "" + str+"\n";
@@ -83,8 +83,8 @@ public class VotingStation {
 	public String getStatistics() {
 		String s;
 		double percentage = 0;
-		if(citizens.size()>0) {
-		percentage = (double)numOfVotes/citizens.size()*100;
+		if(voters.size()>0) {
+		percentage = (double)numOfVotes/voters.size()*100;
 		s ="Vote percentage : "+(int)percentage+"%\n";
 		return s;
 		}
@@ -110,7 +110,7 @@ public class VotingStation {
 	}
 
 	public void addVoter(Citizen c) {
-		citizens.add(c);
+		voters.add(c);
 	}
 	public void updateNumOfParties(int num) {
 		results = new int [num];

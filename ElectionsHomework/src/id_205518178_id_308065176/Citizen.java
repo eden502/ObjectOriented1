@@ -17,20 +17,25 @@ public class Citizen {
 	protected boolean isSoldier;
 	protected boolean didVote;
 	// -------------------C'tors---------------------------
-	public Citizen(int id) {
+	public Citizen(int id) throws Exception {
 		this(id, DEFAULT_YEAR, DEFAULT_NAME, DEFAULT_NUM_OF_VOTING_STATIONS, DEFAULT_ISOLATION_STATUS);
 	}
 
-	public Citizen(int id, int birthYear) {
+	public Citizen(int id, int birthYear) throws Exception {
 		this(id, birthYear, DEFAULT_NAME, DEFAULT_NUM_OF_VOTING_STATIONS, DEFAULT_ISOLATION_STATUS);
 	}
 
-	public Citizen(int id, int birthYear, String name, boolean isInIsolation) {
+	public Citizen(int id, int birthYear, String name, boolean isInIsolation) throws Exception {
 		this(id, birthYear, name, DEFAULT_NUM_OF_VOTING_STATIONS, isInIsolation);
 	}
 
-	public Citizen(int id, int birthYear, String name, int voteStation, boolean isInIsolation) {
-		setId(id);
+	public Citizen(int id, int birthYear, String name, int voteStation, boolean isInIsolation) throws Exception {
+		try {
+			setId(id);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			setId(123456789);
+		}
 		setBirthYear(birthYear);
 		setName(name);
 		setStatus();
@@ -46,14 +51,7 @@ public class Citizen {
 	}
 
 	public void setVotingStation(int stationId) {
-		/*
-		 * generates random number between 1 and total number of stations sets Citizen
-		 * voting station
-		 */
-			//Random randomGen = new Random();
-		//	int rand = randomGen.nextInt(numOfStations);
 			this.voteStation = stationId;
-	
 	}
 
 	public int getVotingStation() {
@@ -69,10 +67,12 @@ public class Citizen {
 		}
 	}
 
-	private boolean setId(int id) {
-		// in the future ID will be tested for 9 digits
-		this.id = id;
-		return true;
+	private boolean setId(int id)  throws Exception{
+			if (id>100000000) {//more than 9 digits
+				this.id = id;
+				return true;
+			}
+			throw new Exception("Invalid ID - Shorter than 9 digits - Setting default ID");
 	}
 
 	// sets if citizen is soldier
