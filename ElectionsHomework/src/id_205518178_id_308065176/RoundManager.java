@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import id_205518178_id_308065176.Party.Wing;
 
-
 public class RoundManager {
 
 //	protected Citizen[] allCitizens;
@@ -16,7 +15,7 @@ public class RoundManager {
 //	protected VotingStation[] allVotingStations;
 //	private int numOfCitizensAdded, numOfPartiesAdded, numOfVotingStationsAdded;
 //	private int numOfCoronaStations, numOfMilitaryStations;
-	private int month,year;
+	private int month, year;
 
 	// ---------------------------USING VECTORS-------------------------------
 
@@ -34,110 +33,106 @@ public class RoundManager {
 		soldiers = new Vector<VotingStation>();
 		sickSoldiers = new Vector<VotingStation>();
 		allParties = new Vector<Party>();
-		setMonth(month);	//add methods
-		setYear(year);	// add methods
+		setMonth(month); // add methods
+		setYear(year); // add methods
 
 	}
-	
 
 	private void setYear(int year) {
 		final int DEFAULT_YEAR = 2020;
 		try {
-		if(year>1990&&year<2030) {
-			this.year = year;
+			if (year > 1990 && year < 2030) {
+				this.year = year;
+				return;
+			}
+			this.year = DEFAULT_YEAR;
 			return;
-		}
-		this.year = DEFAULT_YEAR;
-		return;
-	}
-		catch (InputMismatchException e) {
+		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
 			this.year = DEFAULT_YEAR;
-		}
-		catch (Exception e) {
-			System.out.println("General error: "+e.getMessage());
+		} catch (Exception e) {
+			System.out.println("General error: " + e.getMessage());
 			this.year = DEFAULT_YEAR;
 		}
 	}
-
 
 	private void setMonth(int month) {
 		final int DEFAULT_MONTH = 1;
 		try {
-		if(month<13&&month>0) {
-			this.month = month;
-			return ;
-		}
-		this.month = DEFAULT_MONTH;
-		return ;
-		
-	}
-		catch (InputMismatchException e) {
+			if (month < 13 && month > 0) {
+				this.month = month;
+				return;
+			}
+			this.month = DEFAULT_MONTH;
+			return;
+
+		} catch (InputMismatchException e) {
 			System.out.println(e.getMessage());
 			this.month = DEFAULT_MONTH;
-		}
-		catch (Exception e) {
-			System.out.println("General error: "+e.getMessage());
+		} catch (Exception e) {
+			System.out.println("General error: " + e.getMessage());
 			this.month = DEFAULT_MONTH;
 		}
 	}
-	
+
 	public void addParty(Party p) {
 		this.allParties.add(p);
-		updateVotingStations(allParties.size());
+		setNumOfParties(healthyCitizens, allParties.size());
+		setNumOfParties(soldiers, allParties.size());
+		setNumOfParties(sickSoldiers, allParties.size());
+		setNumOfParties(sickCitizens, allParties.size());
 	}
 
-
-	private void updateVotingStations(int size) {
-		
-	}
-	private void setNumOfParties(Vector <VotingStation> stationType, int num) {
+	//updates the number of parties at results array in votingstation
+	private void setNumOfParties(Vector<VotingStation> stationType, int num) {
 		for (int i = 0; i < stationType.size(); i++) {
 			stationType.get(i).updateNumOfParties(num);
 		}
 	}
 
-
-
-
-	public void addCitizen(Citizen c) {	//check if voting station of each type will be created on first run
+	public void addCitizen(Citizen c) { // check if voting station of each type will be created on first run
 		allCitizens.add(c);
-		
+
 		Random rand = new Random();
+		int r;
 		if (c.getClass() == Soldier.class) {
-			soldiers.get(rand.nextInt(soldiers.size())).addVoter(c);
-			
+			soldiers.get(r=rand.nextInt(soldiers.size())).addVoter(c);
+			c.setVotingStation(soldiers.get(r).stationId);
 		} else if (c.getClass() == SickSoldier.class) {
-			sickSoldiers.get(rand.nextInt(sickSoldiers.size())).addVoter(c);
+			sickSoldiers.get(r=rand.nextInt(sickSoldiers.size())).addVoter(c);
+			c.setVotingStation(sickSoldiers.get(r).stationId);
 		} else if (c.getClass() == Citizen.class) {
-			healthyCitizens.get(rand.nextInt(healthyCitizens.size())).addVoter(c);
+			healthyCitizens.get(r=rand.nextInt(healthyCitizens.size())).addVoter(c);
+			c.setVotingStation(healthyCitizens.get(r).stationId);
 		} else if (c.getClass() == SickCitizen.class) {
-			sickCitizens.get(rand.nextInt(sickCitizens.size())).addVoter(c);
+			sickCitizens.get(r=rand.nextInt(sickCitizens.size())).addVoter(c);
+			c.setVotingStation(sickCitizens.get(r).stationId);
 		}
-		
+
 	}
-	
-	public void addVotingStation(String adr,boolean corStat, boolean milStat) {	//method receives votingStation details and creates it
-		VotingStation station = new VotingStation(adr,corStat,milStat);
-		addVotingStation(station);	
+
+	public void addVotingStation(String adr, boolean corStat, boolean milStat) { // method receives votingStation
+																					// details and creates it
+		VotingStation station = new VotingStation(adr, corStat, milStat);
+		addVotingStation(station);
 	}
-	public void addVotingStation(VotingStation station) {//method adds an already existing voting station
-		if(station.corona) {		
-			if(station.military) {
+
+	public void addVotingStation(VotingStation station) {// method adds an already existing voting station
+		if (station.corona) {
+			if (station.military) {
 				sickSoldiers.add(station);
 				return;
 			}
 			sickCitizens.add(station);
 			return;
 		}
-		if(station.military) {
+		if (station.military) {
 			soldiers.add(station);
 			return;
 		}
 		healthyCitizens.add(station);
 	}
-	
-	
+
 	public int getNumOfParties() {
 		return allParties.size();
 	}
@@ -145,32 +140,34 @@ public class RoundManager {
 	public int getYear() {
 		return this.year;
 	}
-	
+
 	public String getVotingStations() {
-		return healthyCitizens.toString()+sickCitizens.toString()+soldiers.toString()+sickSoldiers.toString();
+		return healthyCitizens.toString() + sickCitizens.toString() + soldiers.toString() + sickSoldiers.toString();
 	}
+
 	public String getAllCitizens() {
 		return allCitizens.toString();
 	}
+
 	public String getAllParties() {
 		return allParties.toString();
 	}
-	
-	public void setCitizenVotingStation(Citizen c1) {
-		if (c1.isInIsolation) {
-			if(c1.isSoldier) {
-				c1.setVotingStation(sickSoldiers.size());
-				return;
-			}
-			c1.setVotingStation(sickCitizens.size());
-			return;
-		}
-		if(c1.isSoldier) {
-			c1.setVotingStation(soldiers.size());
-			return;
-		}
-		c1.setVotingStation(healthyCitizens.size());		
-//		c1.setVotingStation(numOfVotingStationsAdded);
+
+//	public void setCitizenVotingStation(Citizen c1) {
+//		if (c1.isInIsolation) {
+//			if (c1.isSoldier) {
+//				c1.setVotingStation(sickSoldiers.size());
+//				return;
+//			}
+//			c1.setVotingStation(sickCitizens.size());
+//			return;
+//		}
+//		if (c1.isSoldier) {
+//			c1.setVotingStation(soldiers.size());
+//			return;
+//		}
+//		c1.setVotingStation(healthyCitizens.size());
+////		c1.setVotingStation(numOfVotingStationsAdded);
 //		// addCitizensList(c1);
 //		this.allVotingStations[c1.voteStation - 1].addCitizen(c1);
 ////		for (int i = 0; i < numOfCitizensAdded; i++) {
@@ -178,13 +175,7 @@ public class RoundManager {
 ////			addCitizenToVotingStation(allCitizens[i]);
 //
 //		// }
-	}
-	
-	
-	
-	
-	
-	
+//	}
 
 	// ------------------------------------------------------------------------
 	// ------------------RoundManager C'tor-------------------
@@ -201,10 +192,6 @@ public class RoundManager {
 //	}
 
 	// -------------------Getters/Setters--------------------
-
-
-
-
 
 //	public String getVotingStations() {
 //		StringBuffer str = new StringBuffer();
@@ -391,72 +378,85 @@ public class RoundManager {
 	// ----------------------------------------------------------------
 
 //---------------------------------------------------------------------	
-	public void startVote() {//check for generic method!
+	public void startVote() {// check for generic method!
 		resetRound();
 		for (int i = 0; i < allCitizens.size(); i++) {
 			if (allCitizens.get(i).vote()) {
 				Random randomGen = new Random();
 				int rand = randomGen.nextInt(allParties.size());
-				if(allCitizens.get(i).isInIsolation&&allCitizens.get(i).isSoldier) {
+				if (allCitizens.get(i).isInIsolation && allCitizens.get(i).isSoldier) {
 					for (int j = 0; j < sickSoldiers.size(); j++) {
-						if(sickSoldiers.get(j).stationId==allCitizens.get(i).getVotingStation()) {
+						if (sickSoldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							sickSoldiers.get(j).castVote(rand);
+							break;
 						}
 					}
 				}
-				if(allCitizens.get(i).isInIsolation&&!allCitizens.get(i).isSoldier) {
+				if (allCitizens.get(i).isInIsolation && !allCitizens.get(i).isSoldier) {
 					for (int j = 0; j < sickCitizens.size(); j++) {
-						if(sickCitizens.get(j).stationId==allCitizens.get(i).getVotingStation()) {
+						if (sickCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							sickCitizens.get(j).castVote(rand);
+							break;
 						}
 					}
 				}
-				if(allCitizens.get(i).isSoldier&&!allCitizens.get(i).isInIsolation) {
+				if (allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
 					for (int j = 0; j < soldiers.size(); j++) {
-						if(soldiers.get(j).stationId==allCitizens.get(i).getVotingStation()) {
+						if (soldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							soldiers.get(j).castVote(rand);
+							break;
 						}
 					}
-					
+
 				}
-				if(!allCitizens.get(i).isSoldier&&!allCitizens.get(i).isInIsolation) {
+				if (!allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
 					for (int j = 0; j < healthyCitizens.size(); j++) {
-						if(healthyCitizens.get(j).stationId==allCitizens.get(i).getVotingStation()) {
+						if (healthyCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							healthyCitizens.get(j).castVote(rand);
+							break;
 						}
 					}
-					
+
 				}
-				
-				//	allVotingStations[allCitizens[i].getVotingStation() - 1].castVote(rand);
+
+				// allVotingStations[allCitizens[i].getVotingStation() - 1].castVote(rand);
 				// allVotingStations[allCitizens[i].voteStation].castVote(rand);
 			}
 		}
 	}
-	private  String generateStationResults(Vector <VotingStation> stationType) {
+
+	private String generateStationResults(Vector<VotingStation> stationType) {
 		StringBuffer str = new StringBuffer();
-		str.append("Final results are:\n");
+		//str.append("Final results are:\n");
 		for (int i = 0; i < stationType.size(); i++) {
 			str.append("--------------------------------\n");
 			// allVotingStations[i].getVotingStationResults();
-			str.append("Voting Station " +  stationType.get(i) + ":\n");
-			str.append(( stationType.get(i)).getStatistics());
+			str.append("Voting Station " + stationType.get(i) + ":\n");
+			str.append((stationType.get(i)).getStatistics());
 			for (int j = 0; j < allParties.size(); j++) {
 				str.append(allParties.get(j).getPartyName() + ":" + stationType.get(i).results[j] + " votes\n");
 			}
 		}
-		str.append("--------------------------------\n");
-		return str + "" + showFinalResults();
+		
+		
+		return str+"";
 	}
-		
-		
-	
 
 	public String results() {
+		StringBuffer str = new StringBuffer();
 		
-		return generateStationResults(healthyCitizens)+generateStationResults(sickCitizens)+generateStationResults(soldiers)+generateStationResults(sickSoldiers);
+		str.append(generateStationResults(healthyCitizens));
+		str.append(generateStationResults(sickCitizens));
+		str.append(generateStationResults(soldiers));
+		str.append(generateStationResults(sickSoldiers));
+		str.append("-----------------------------\n");
+		calculateFinalResults(healthyCitizens);
+		calculateFinalResults(sickCitizens);
+		calculateFinalResults(sickSoldiers);
+		calculateFinalResults(soldiers);
 		
-		
+		return ""+str+showFinalResults();
+
 	}
 
 	private void resetRound() {
@@ -465,20 +465,24 @@ public class RoundManager {
 //				allVotingStations[i].resetRound();// add interface
 //				allParties[j].resetRound();
 //			}
-		//}
+		// }
 	}
 
 	private StringBuffer showFinalResults() {
 		StringBuffer str = new StringBuffer();
-//		for (int i = 0; i < numOfVotingStationsAdded; i++) {
-//			for (int j = 0; j < numOfPartiesAdded; j++) {
-//				allParties[j].setTotalVotes(allVotingStations[i].results[j]);
-//			}
-//		}
-//		for (int i = 0; i < numOfPartiesAdded; i++) {
-//			str.append(allParties[i].getPartyName() + " total votes are: " + allParties[i].getTotalVotes() + "\n");
-//		}
+		
+		for (int i = 0; i < allParties.size(); i++) {
+			str.append(allParties.get(i).getPartyName() + " total votes are: " + allParties.get(i).getResults() + "\n");
+		}
 		return str;
+	}
+	private void calculateFinalResults(Vector <VotingStation> stationType) {
+		for (int i = 0; i < stationType.size(); i++) {
+			for (int j = 0; j < allParties.size(); j++) {
+				allParties.get(j).setResults(stationType.get(i).results[j]);
+			}
+		}	
+		
 	}
 
 //	@Override

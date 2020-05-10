@@ -15,7 +15,7 @@ public class Citizen {
 	protected String name;
 	protected boolean isInIsolation;
 	protected boolean isSoldier;
-
+	protected boolean didVote;
 	// -------------------C'tors---------------------------
 	public Citizen(int id) {
 		this(id, DEFAULT_YEAR, DEFAULT_NAME, DEFAULT_NUM_OF_VOTING_STATIONS, DEFAULT_ISOLATION_STATUS);
@@ -45,14 +45,14 @@ public class Citizen {
 		this.name = name;
 	}
 
-	public void setVotingStation(int numOfStations) {
+	public void setVotingStation(int stationId) {
 		/*
 		 * generates random number between 1 and total number of stations sets Citizen
 		 * voting station
 		 */
-			Random randomGen = new Random();
-			int rand = randomGen.nextInt(numOfStations);
-			this.voteStation = rand;
+			//Random randomGen = new Random();
+		//	int rand = randomGen.nextInt(numOfStations);
+			this.voteStation = stationId;
 	
 	}
 
@@ -88,13 +88,14 @@ public class Citizen {
 		 * randomise boolean value to determine if citizen is voting
 		 */
 		Random isVoting = new Random();
-		return isVoting.nextBoolean();
+		return didVote=isVoting.nextBoolean();
+		
 	}
 
 	@Override
 	public String toString() {
 		return "Name: " + name + "\nID: " + id + "\nBirth year: " + birthYear + "\nIsolation status: " + isInIsolation
-				+ "\n";
+				+ "\nDid vote: "+didVote+"\n";
 	}
 
 }

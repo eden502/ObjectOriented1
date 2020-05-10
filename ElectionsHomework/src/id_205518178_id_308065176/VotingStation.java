@@ -113,10 +113,7 @@ public class VotingStation {
 		citizens.add(c);
 	}
 	public void updateNumOfParties(int num) {
-		int [] temp = new int [results.length+1];
-		System.arraycopy(results, 0, temp, 0, temp.length);
-		results = new int [temp.length];
-		results = temp;
+		results = new int [num];
 	}
 
 	

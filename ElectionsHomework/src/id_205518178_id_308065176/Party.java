@@ -14,6 +14,7 @@ public class Party {
 	protected Wing wing;
 	private int numOfPartyMembers;
 	private int totalVotes;
+	private int myResults;
 
 	public Party(String partyName, LocalDate dateCreated, Wing wing) {
 		this.partyName = partyName;
@@ -65,6 +66,12 @@ public class Party {
 			addMemberToParty(Candidate);
 		}
 		
+	}
+	public void setResults(int r) {
+		myResults += r;
+	}
+	public int getResults() {
+		return myResults;
 	}
 	
 	private Object[] fullArray(Object[] obj) {

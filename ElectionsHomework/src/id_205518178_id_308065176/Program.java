@@ -49,7 +49,7 @@ public class Program {
 		}
 		for (int i = 0; i < allCitizens.length; i++) {
 			round1.addCitizen(allCitizens[i]);
-			round1.setCitizenVotingStation(allCitizens[i]);
+			//round1.setCitizenVotingStation(allCitizens[i]);
 		}
 		for (int i = 0; i < allParties.length; i++) {
 			round1.addParty(allParties[i]);
