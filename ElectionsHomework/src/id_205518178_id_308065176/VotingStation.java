@@ -4,11 +4,11 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Vector;
 
-public class VotingStation {
+public class VotingStation<T extends Citizen> {
 
 	protected static int counter;
 	protected int stationId;
-	protected Vector<Citizen> voters;
+	protected Vector<T> voters;
 	protected String address;
 	protected int[] results;
 	protected int numOfVotes;
@@ -32,7 +32,7 @@ public class VotingStation {
 		setAddress(address);
 		corona = corStat;
 		military = milStat;
-		voters = new Vector<Citizen>();
+		voters = new Vector<T>();
 		stationId=++counter;
 	}
 
@@ -109,7 +109,7 @@ public class VotingStation {
 		return true;
 	}
 
-	public void addVoter(Citizen c) {
+	public void addVoter(T c) {
 		voters.add(c);
 	}
 	public void updateNumOfParties(int num) {

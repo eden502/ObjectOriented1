@@ -10,4 +10,12 @@ public class SickSoldier extends Soldier implements Sickable {
 		
 	}
 
+
+
+	@Override
+	public int getDaysSick() {
+		
+		return 0;
+	}
+
 }

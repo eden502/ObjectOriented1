@@ -18,8 +18,8 @@ public class Program {
 
 		VotingStation[] allVotingStations = new VotingStation[3];
 		allVotingStations[0] = new VotingStation("Tel Aviv 15",true,false);
-		allVotingStations[1] = new VotingStation("Rosh Pina 46",false,true);
-		allVotingStations[2] = new VotingStation("Rasfana 14",false,false);
+		allVotingStations[1] = new VotingStation("Rosh Pina 46",false,false);
+		allVotingStations[2] = new VotingStation("Rasfana 14",false,true);
 		
 		Party[] allParties = new Party[3];
 		LocalDate likud = LocalDate.of(1988, 4, 25);

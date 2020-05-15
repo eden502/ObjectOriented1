@@ -20,18 +20,18 @@ public class RoundManager {
 	// ---------------------------USING VECTORS-------------------------------
 
 	private Vector<Citizen> allCitizens;
-	private Vector<VotingStation> healthyCitizens;
-	private Vector<VotingStation> sickCitizens;
-	private Vector<VotingStation> soldiers;
-	private Vector<VotingStation> sickSoldiers;
+	private Vector<VotingStation<Citizen>> healthyCitizens;
+	private Vector<VotingStation<SickCitizen>> sickCitizens;
+	private Vector<VotingStation<Soldier>> soldiers;
+	private Vector<VotingStation<SickSoldier>> sickSoldiers;
 	private Vector<Party> allParties;
 
 	public RoundManager(int roundNumber, int month, int year) {
 		allCitizens = new Vector<Citizen>();
-		healthyCitizens = new Vector<VotingStation>();
-		sickCitizens = new Vector<VotingStation>();
-		soldiers = new Vector<VotingStation>();
-		sickSoldiers = new Vector<VotingStation>();
+		healthyCitizens = new Vector<VotingStation<Citizen>>();
+		sickCitizens = new Vector<VotingStation<SickCitizen>>();
+		soldiers = new Vector<VotingStation<Soldier>>();
+		sickSoldiers = new Vector<VotingStation<SickSoldier>>();
 		allParties = new Vector<Party>();
 		setMonth(month); // add methods
 		setYear(year); // add methods
@@ -84,31 +84,31 @@ public class RoundManager {
 	}
 
 	//updates the number of parties at results array in votingstation
-	private void setNumOfParties(Vector<VotingStation> stationType, int num) {
+	private <T extends Citizen> void setNumOfParties(Vector<VotingStation<T>> stationType, int num) {
 		for (int i = 0; i < stationType.size(); i++) {
 			stationType.get(i).updateNumOfParties(num);
 		}
 	}
 
 	
-	public void addCitizen(Citizen c) { // check if voting station of each type will be created on first run
+	public <T extends Citizen>void addCitizen(T c) { // check if voting station of each type will be created on first run
 		try {
 		allCitizens.add(c);
-		System.out.println(c.getClass());
+		//System.out.println(c.getClass());
 
 		Random rand = new Random();
 		int r;
 		if (c.getClass() == Soldier.class) {
-			soldiers.get(r=rand.nextInt(soldiers.size())).addVoter(c);
+			soldiers.get(r=rand.nextInt(soldiers.size())).addVoter((Soldier) c);
 			((Soldier) c).setVotingStation(soldiers.get(r).stationId);
 		} else if (c.getClass() == SickSoldier.class) {
-			sickSoldiers.get(r=rand.nextInt(sickSoldiers.size())).addVoter(c);
+			sickSoldiers.get(r=rand.nextInt(sickSoldiers.size())).addVoter((SickSoldier) c);
 			((SickSoldier) c).setVotingStation(sickSoldiers.get(r).stationId);
 		} else if (c.getClass() == Citizen.class) {
 			healthyCitizens.get(r=rand.nextInt(healthyCitizens.size())).addVoter(c);
 			((Citizen) c).setVotingStation(healthyCitizens.get(r).stationId);
 		} else if (c.getClass() == SickCitizen.class) {
-			sickCitizens.get(r=rand.nextInt(sickCitizens.size())).addVoter(c);
+			sickCitizens.get(r=rand.nextInt(sickCitizens.size())).addVoter((SickCitizen) c);
 			//sickCitizens.get(0).addVoter(c);
 			((SickCitizen) c).setVotingStation(sickCitizens.get(0).stationId);
 		}
@@ -124,21 +124,25 @@ public class RoundManager {
 		addVotingStation(station);
 	}
 
-	public void addVotingStation(VotingStation station) {// method adds an already existing voting station
+	public <T extends Citizen>void addVotingStation(VotingStation<T> station) {// method adds an already existing voting station
 
 			if (station.military) {
-				sickSoldiers.add(station);
+				soldiers.add((VotingStation<Soldier>) station);
 				return;
 			}
-			sickCitizens.add(station);
-			return;
-		}
-		if (station.military) {
-			soldiers.add(station);
-			return;
-		}
-		healthyCitizens.add(station);
+			if(station.corona) {
+				sickCitizens.add((VotingStation<SickCitizen>) station);
+			}
+			if(station.corona&&station.military) {
+				sickSoldiers.add((VotingStation<SickSoldier>) station);
+			}
+			if(!station.corona&&!station.military) {
+				healthyCitizens.add((VotingStation<Citizen>) station);
+			}
+
+			
 	}
+
 
 	public int getNumOfParties() {
 		return allParties.size();
@@ -432,7 +436,7 @@ public class RoundManager {
 		}
 	}
 
-	private String generateStationResults(Vector<VotingStation> stationType) {
+	private <T extends Citizen> String generateStationResults(Vector<VotingStation<T>> stationType) {
 		StringBuffer str = new StringBuffer();
 		//str.append("Final results are:\n");
 		for (int i = 0; i < stationType.size(); i++) {
@@ -483,7 +487,7 @@ public class RoundManager {
 		}
 		return str;
 	}
-	private void calculateFinalResults(Vector <VotingStation> stationType) {
+	private <T extends Citizen> void calculateFinalResults(Vector <VotingStation<T>> stationType) {
 		for (int i = 0; i < stationType.size(); i++) {
 			for (int j = 0; j < allParties.size(); j++) {
 				allParties.get(j).setResults(stationType.get(i).results[j]);
