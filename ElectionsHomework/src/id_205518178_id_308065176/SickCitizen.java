@@ -2,12 +2,12 @@ package id_205518178_id_308065176;
 
 import java.util.InputMismatchException;
 
-public class SickCitizen extends Citizen {
+public class SickCitizen extends Citizen implements Sickable {
 
 	private int daysSick;
 
-	public SickCitizen(int id, int birthYear, String name, boolean isInIsolation, int daysSick) throws Exception {
-		super(id, birthYear, name, isInIsolation);
+	public SickCitizen(int id, int birthYear, String name, int daysSick) throws Exception {
+		super(id, birthYear, name);
 		updateSickDays(daysSick);
 	}
 
@@ -17,11 +17,19 @@ public class SickCitizen extends Citizen {
 
 		} catch (InputMismatchException e) {
 			System.out.println("Input error");
-			daysSick = 0;
+			
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			daysSick = 0;
+			
 		}
+	}
+
+
+
+	@Override
+	public int getDaysSick() {
+		
+		return daysSick;
 	}
 
 }

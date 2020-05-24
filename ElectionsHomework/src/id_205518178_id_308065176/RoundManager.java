@@ -75,7 +75,10 @@ public class RoundManager {
 		}
 	}
 
-	public void addParty(Party p) {
+	public void addParty(Party p) throws Exception {
+		if(allParties.contains(p)) {
+			throw new Exception("party already exists");
+		}
 		this.allParties.add(p);
 		setNumOfParties(healthyCitizens, allParties.size());
 		setNumOfParties(soldiers, allParties.size());
@@ -83,39 +86,39 @@ public class RoundManager {
 		setNumOfParties(sickCitizens, allParties.size());
 	}
 
-	//updates the number of parties at results array in votingstation
+	// updates the number of parties at results array in votingstation
 	private <T extends Citizen> void setNumOfParties(Vector<VotingStation<T>> stationType, int num) {
 		for (int i = 0; i < stationType.size(); i++) {
 			stationType.get(i).updateNumOfParties(num);
 		}
 	}
 
-	
-	public <T extends Citizen>void addCitizen(T c) { // check if voting station of each type will be created on first run
+	public <T extends Citizen> void addCitizen(T c) { // check if voting station of each type will be created on first
+														// run
 		try {
-		allCitizens.add(c);
-		//System.out.println(c.getClass());
+			allCitizens.add(c);
+			// System.out.println(c.getClass());
 
-		Random rand = new Random();
-		int r;
-		if (c.getClass() == Soldier.class) {
-			soldiers.get(r=rand.nextInt(soldiers.size())).addVoter((Soldier) c);
-			((Soldier) c).setVotingStation(soldiers.get(r).stationId);
-		} else if (c.getClass() == SickSoldier.class) {
-			sickSoldiers.get(r=rand.nextInt(sickSoldiers.size())).addVoter((SickSoldier) c);
-			((SickSoldier) c).setVotingStation(sickSoldiers.get(r).stationId);
-		} else if (c.getClass() == Citizen.class) {
-			healthyCitizens.get(r=rand.nextInt(healthyCitizens.size())).addVoter(c);
-			((Citizen) c).setVotingStation(healthyCitizens.get(r).stationId);
-		} else if (c.getClass() == SickCitizen.class) {
-			sickCitizens.get(r=rand.nextInt(sickCitizens.size())).addVoter((SickCitizen) c);
-			//sickCitizens.get(0).addVoter(c);
-			((SickCitizen) c).setVotingStation(sickCitizens.get(0).stationId);
+			Random rand = new Random();
+			int r;
+			if (c.getClass() == Soldier.class) {
+				soldiers.get(r = rand.nextInt(soldiers.size())).addVoter((Soldier) c);
+				((Soldier) c).setVotingStation(soldiers.get(r).stationId);
+			} else if (c.getClass() == SickSoldier.class) {
+				sickSoldiers.get(r = rand.nextInt(sickSoldiers.size())).addVoter((SickSoldier) c);
+				((SickSoldier) c).setVotingStation(sickSoldiers.get(r).stationId);
+			} else if (c.getClass() == Citizen.class) {
+				healthyCitizens.get(r = rand.nextInt(healthyCitizens.size())).addVoter(c);
+				((Citizen) c).setVotingStation(healthyCitizens.get(r).stationId);
+			} else if (c.getClass() == SickCitizen.class) {
+				sickCitizens.get(r = rand.nextInt(sickCitizens.size())).addVoter((SickCitizen) c);
+				// sickCitizens.get(0).addVoter(c);
+				((SickCitizen) c).setVotingStation(sickCitizens.get(0).stationId);
+			}
+		} catch (IllegalArgumentException e) {
+			System.out.println("voting station for type" + c.getClass() + "was not created yet");
 		}
-		}catch (IllegalArgumentException e) {
-			System.out.println("Trying to add a citizen to a voting station type that does not exist");
-		}
-		
+
 	}
 
 	public void addVotingStation(String adr, boolean corStat, boolean milStat) { // method receives votingStation
@@ -124,25 +127,28 @@ public class RoundManager {
 		addVotingStation(station);
 	}
 
-	public <T extends Citizen>void addVotingStation(VotingStation<T> station) {// method adds an already existing voting station
+	@SuppressWarnings("unchecked")
+	public <T extends Citizen> void addVotingStation(VotingStation<T> station) {// method adds an already existing
+																				// voting station
 
-			if (station.military) {
-				soldiers.add((VotingStation<Soldier>) station);
-				return;
-			}
-			if(station.corona) {
-				sickCitizens.add((VotingStation<SickCitizen>) station);
-			}
-			if(station.corona&&station.military) {
-				sickSoldiers.add((VotingStation<SickSoldier>) station);
-			}
-			if(!station.corona&&!station.military) {
-				healthyCitizens.add((VotingStation<Citizen>) station);
-			}
+		if (station.military && !station.corona) {
+			soldiers.add((VotingStation<Soldier>) station);
+			return;
+		}
+		if (station.corona && !station.military) {
+			sickCitizens.add((VotingStation<SickCitizen>) station);
+			return;
+		}
+		if (station.corona && station.military) {
+			sickSoldiers.add((VotingStation<SickSoldier>) station);
+			return;
+		}
+		if (!station.corona && !station.military) {
+			healthyCitizens.add((VotingStation<Citizen>) station);
+			return;
+		}
 
-			
 	}
-
 
 	public int getNumOfParties() {
 		return allParties.size();
@@ -390,12 +396,11 @@ public class RoundManager {
 
 //---------------------------------------------------------------------	
 	public void startVote() {// check for generic method!
-		resetRound();
 		for (int i = 0; i < allCitizens.size(); i++) {
 			if (allCitizens.get(i).vote()) {
 				Random randomGen = new Random();
 				int rand = randomGen.nextInt(allParties.size());
-				if (allCitizens.get(i).isInIsolation && allCitizens.get(i).isSoldier) {
+				if (allCitizens.get(i).getClass() == SickSoldier.class) {
 					for (int j = 0; j < sickSoldiers.size(); j++) {
 						if (sickSoldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							sickSoldiers.get(j).castVote(rand);
@@ -403,24 +408,24 @@ public class RoundManager {
 						}
 					}
 				}
-				if (allCitizens.get(i).isInIsolation && !allCitizens.get(i).isSoldier) {
+				if (allCitizens.get(i).getClass() == SickCitizen.class) {
 					for (int j = 0; j < sickCitizens.size(); j++) {
 						if (sickCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							sickCitizens.get(j).castVote(rand);
 							break;
 						}
 					}
+
 				}
-				if (allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
+				if (allCitizens.get(i).getClass() == Soldier.class) {
 					for (int j = 0; j < soldiers.size(); j++) {
 						if (soldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							soldiers.get(j).castVote(rand);
 							break;
 						}
 					}
-
 				}
-				if (!allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
+				if (allCitizens.get(i).getClass() == Citizen.class) {
 					for (int j = 0; j < healthyCitizens.size(); j++) {
 						if (healthyCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
 							healthyCitizens.get(j).castVote(rand);
@@ -430,6 +435,41 @@ public class RoundManager {
 
 				}
 
+//				if (allCitizens.get(i).isInIsolation && allCitizens.get(i).isSoldier) {
+//					for (int j = 0; j < sickSoldiers.size(); j++) {
+//						if (sickSoldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
+//							sickSoldiers.get(j).castVote(rand);
+//							break;
+//						}
+//					}
+//				}
+//				if (allCitizens.get(i).isInIsolation && !allCitizens.get(i).isSoldier) {
+//					for (int j = 0; j < sickCitizens.size(); j++) {
+//						if (sickCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
+//							sickCitizens.get(j).castVote(rand);
+//							break;
+//						}
+//					}
+//				}
+//				if (allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
+//					for (int j = 0; j < soldiers.size(); j++) {
+//						if (soldiers.get(j).stationId == allCitizens.get(i).getVotingStation()) {
+//							soldiers.get(j).castVote(rand);
+//							break;
+//						}
+//					}
+//
+//				}
+//				if (!allCitizens.get(i).isSoldier && !allCitizens.get(i).isInIsolation) {
+//					for (int j = 0; j < healthyCitizens.size(); j++) {
+//						if (healthyCitizens.get(j).stationId == allCitizens.get(i).getVotingStation()) {
+//							healthyCitizens.get(j).castVote(rand);
+//							break;
+//						}
+//					}
+//
+//				}
+
 				// allVotingStations[allCitizens[i].getVotingStation() - 1].castVote(rand);
 				// allVotingStations[allCitizens[i].voteStation].castVote(rand);
 			}
@@ -438,7 +478,7 @@ public class RoundManager {
 
 	private <T extends Citizen> String generateStationResults(Vector<VotingStation<T>> stationType) {
 		StringBuffer str = new StringBuffer();
-		//str.append("Final results are:\n");
+		// str.append("Final results are:\n");
 		for (int i = 0; i < stationType.size(); i++) {
 			str.append("--------------------------------\n");
 			// allVotingStations[i].getVotingStationResults();
@@ -448,14 +488,13 @@ public class RoundManager {
 				str.append(allParties.get(j).getPartyName() + ":" + stationType.get(i).results[j] + " votes\n");
 			}
 		}
-		
-		
-		return str+"";
+
+		return str + "";
 	}
 
 	public String results() {
 		StringBuffer str = new StringBuffer();
-		
+
 		str.append(generateStationResults(healthyCitizens));
 		str.append(generateStationResults(sickCitizens));
 		str.append(generateStationResults(soldiers));
@@ -465,34 +504,40 @@ public class RoundManager {
 		calculateFinalResults(sickCitizens);
 		calculateFinalResults(sickSoldiers);
 		calculateFinalResults(soldiers);
-		
-		return ""+str+showFinalResults();
+
+		return "" + str + showFinalResults();
 
 	}
 
-	private void resetRound() {
-//		for (int i = 0; i < numOfVotingStationsAdded; i++) {
-//			for (int j = 0; j < numOfPartiesAdded; j++) {
-//				allVotingStations[i].resetRound();// add interface
-//				allParties[j].resetRound();
-//			}
-		// }
-	}
+
 
 	private StringBuffer showFinalResults() {
 		StringBuffer str = new StringBuffer();
-		
+
 		for (int i = 0; i < allParties.size(); i++) {
 			str.append(allParties.get(i).getPartyName() + " total votes are: " + allParties.get(i).getResults() + "\n");
 		}
 		return str;
 	}
-	private <T extends Citizen> void calculateFinalResults(Vector <VotingStation<T>> stationType) {
+
+	private <T extends Citizen> void calculateFinalResults(Vector<VotingStation<T>> stationType) {
 		for (int i = 0; i < stationType.size(); i++) {
 			for (int j = 0; j < allParties.size(); j++) {
 				allParties.get(j).setResults(stationType.get(i).results[j]);
 			}
-		}	
+		}
+
+	}
+
+	public void addNewCandidate(PartyMember p1) throws Exception { 
+		if(p1.getMemberStatus()) {
+			throw new Exception("Already a member of a party"); 
+		}
+		int rand;
+		Random randNum = new Random();
+		rand = randNum.nextInt(allParties.size());
+		allParties.get(rand).addMemberToParty(p1);
+		p1.setParty(rand);
 		
 	}
 

@@ -47,10 +47,6 @@ public class VotingStation<T extends Citizen> {
 	public void setNumOfParties(int numOfPartiesAdded) {
 		this.results = new int [numOfPartiesAdded];
 	}
-
-//	public void addCitizen(Citizen citizen) {
-//		voters.add(citizen);
-//	}
 	
 	public int [] getVotingStationResults() {
 		return results;

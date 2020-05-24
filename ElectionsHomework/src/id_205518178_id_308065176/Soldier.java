@@ -7,8 +7,8 @@ public class Soldier extends Citizen {
 	public Soldier(int id) throws Exception {
 		super(id);
 	}
-	public Soldier(int id, int birthYear, String name, boolean isInIsolation,boolean weaponStatus) throws Exception {
-		super(id,birthYear,name,isInIsolation);
+	public Soldier(int id, int birthYear, String name,boolean weaponStatus) throws Exception {
+		super(id,birthYear,name);
 		setWeaponStatus(weaponStatus);
 		
 	}

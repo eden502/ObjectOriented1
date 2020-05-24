@@ -30,16 +30,16 @@ public class Program {
 		allParties[2] = new Party("Kahol Lavan", KL, Wing.Center);
 
 		Citizen[] allCitizens = new Citizen[10];
-		allCitizens[0] = new Soldier(555555555, 1989, "Hob", false, false);
-		allCitizens[1] = new Citizen(111111111, 1990, "Bob", false);
-		allCitizens[2] = new Citizen(222222222, 1991, "Rob", false);
-		allCitizens[3] = new Citizen(333333333, 1992, "Kob", false);
-		allCitizens[4] = new Citizen(444444444, 1993, "Sob", false);
-		allCitizens[5] = new Citizen(666666666, 1989, "erob", false);
-		allCitizens[6] = new Citizen(777777777, 1990, "Bwer", false);
-		allCitizens[7] = new Citizen(888888888, 1991, "Rhf", false);
-		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs", false);
-		allCitizens[9] = new SickCitizen(123456789,1992,"sick",true,11);
+		allCitizens[0] = new Soldier(555555555, 1989, "Hob", false);
+		allCitizens[1] = new Citizen(111111111, 1990, "Bob");
+		allCitizens[2] = new Citizen(222222222, 1991, "Rob");
+		allCitizens[3] = new Citizen(333333333, 1992, "Kob");
+		allCitizens[4] = new Citizen(444444444, 1993, "Sob");
+		allCitizens[5] = new Citizen(666666666, 1989, "erob");
+		allCitizens[6] = new Citizen(777777777, 1990, "Bwer");
+		allCitizens[7] = new Citizen(888888888, 1991, "Rhf");
+		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs");
+		allCitizens[9] = new SickCitizen(123456789,1992,"sick",11);
 		
 		
 		
@@ -55,6 +55,7 @@ public class Program {
 		for (int i = 0; i < allParties.length; i++) {
 			round1.addParty(allParties[i]);
 		}
+		PartyMember p1 = new PartyMember(123456789,1990,"Member");
 		
 
 		// -----------------Menu------------------------
@@ -82,15 +83,16 @@ public class Program {
 			round1.addVotingStation("Beer Sheva",false,true);
 			break;
 		case 2:
-			// round1.addNewCitizen(55511114,2001,"Kobi",false,1);
+			Citizen c1 = new Citizen(123456789,1990,"NEWC");
+			 round1.addCitizen(c1);
 			break;
 		case 3:
 			LocalDate d = LocalDate.of(1950, 11, 26);
-		//	 round1.addNewParty("Avoda",d,Wing.Left);
+			Party par1 = new Party("Avoda",d,Wing.Left);
+			 round1.addParty(par1);
 			break;
 		case 4:
-
-			// round1.addNewCandidate(14796741, 1990, "Shiko", false, allParties[1],1);
+			 round1.addNewCandidate(p1);
 			break;
 		case 5:
 
@@ -102,7 +104,7 @@ public class Program {
 			break;
 		case 7:
 
-		//	System.out.println(round1.showAllParties());
+			System.out.println(round1.getAllParties());
 			break;
 		case 8:
 			round1.startVote();

@@ -1,6 +1,7 @@
 package id_205518178_id_308065176;
 
 import java.time.LocalDate;
+import java.util.Vector;
 
 public class Party {
 
@@ -9,7 +10,7 @@ public class Party {
 	}
 
 	protected String partyName;
-	protected PartyMember[] members;
+	protected Vector<PartyMember> members;
 	protected LocalDate dateCreated;
 	protected Wing wing;
 	private int numOfPartyMembers;
@@ -18,10 +19,10 @@ public class Party {
 
 	public Party(String partyName, LocalDate dateCreated, Wing wing) {
 		this.partyName = partyName;
-		members = new PartyMember[10];
 		this.dateCreated = dateCreated;
 		this.wing = wing;
 		numOfPartyMembers = 0;
+		members = new Vector<PartyMember>();
 	}
 	
 	public String getPartyName() {
@@ -35,13 +36,13 @@ public class Party {
 	}
 	
 	public int getSizeOfParty() {
-		return members.length;
+		return members.size();
 	}
 	@Override
 	public String toString() {
 
 		return "Party Name: " + partyName + "\nDate created: " + dateCreated + "\nWing: " + wing.toString()
-				+ "\nNumber of members: " + numOfPartyMembers + "\n";
+				+ "\nNumber of members: " + numOfPartyMembers + "\n"+"Candidates: "+members.toString()+"\n--------------------\n";
 	}
 
 	public void resetRound() {
@@ -51,21 +52,26 @@ public class Party {
 	
 	// -------- Adding Member to Party By his Position - 
 	//check if position set in PartyMember been restricted -------- 
-	public void addMemberToParty(PartyMember Candidate) {
-		if (numOfPartyMembers<members.length) {
-		members[Candidate.getPosition()-1] = Candidate;
+//	public void addMemberToParty(PartyMember Candidate) {
+//		if (numOfPartyMembers<members.length) {
+//		members[Candidate.getPosition()-1] = Candidate;
+//		numOfPartyMembers++;
+//		Candidate.setMember(true);
+//		}
+//		else {
+//			int newLength = this.members.length * 2;
+//			Object t = new Object[newLength];
+//			t = fullArray(this.members);
+//			this.members = new PartyMember[newLength];
+//			System.arraycopy(t, 0, this.members, 0, newLength);
+//			addMemberToParty(Candidate);
+//		}
+//		
+//	}
+	
+	public void addMemberToParty(PartyMember p1) {
+		members.add(p1);
 		numOfPartyMembers++;
-		Candidate.setMember(true);
-		}
-		else {
-			int newLength = this.members.length * 2;
-			Object t = new Object[newLength];
-			t = fullArray(this.members);
-			this.members = new PartyMember[newLength];
-			System.arraycopy(t, 0, this.members, 0, newLength);
-			addMemberToParty(Candidate);
-		}
-		
 	}
 	public void setResults(int r) {
 		myResults += r;
@@ -74,12 +80,6 @@ public class Party {
 		return myResults;
 	}
 	
-	private Object[] fullArray(Object[] obj) {
-		Object[] temp = new Object[obj.length * 2];
-		System.arraycopy(obj, 0, temp, 0, obj.length);
-		// this.allVotingStations = new VotingStation[temp.length];
-		// System.arraycopy(temp, 0, this.allVotingStations, 0, temp.length);
-		return temp;
-	}
+
 
 }
