@@ -1,8 +1,8 @@
 package id_205518178_id_308065176;
 
 //Eden Harel ID:205518178
-//Dorel Saig ID:308065176
 
+//Dorel Saig ID:308065176
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -17,13 +17,13 @@ public class Program {
 		RoundManager round1 = new RoundManager(1, 2, 2017);
 
 		VotingStation[] allVotingStations = new VotingStation[3];
-		allVotingStations[0] = new VotingStation("Tel Aviv 15",true,false);
-		allVotingStations[1] = new VotingStation("Rosh Pina 46",false,false);
-		allVotingStations[2] = new VotingStation("Rasfana 14",false,true);
-		
+		allVotingStations[0] = new VotingStation("Tel Aviv 15", true, false);
+		allVotingStations[1] = new VotingStation("Rosh Pina 46", false, false);
+		allVotingStations[2] = new VotingStation("Rasfana 14", false, true);
+
 		Party[] allParties = new Party[3];
 		LocalDate likud = LocalDate.of(1988, 4, 25);
-		LocalDate meretz = LocalDate.of(2002, 6, 14); 
+		LocalDate meretz = LocalDate.of(2002, 6, 14);
 		LocalDate KL = LocalDate.of(2017, 5, 12);
 		allParties[0] = new Party("Likud", likud, Wing.Right);
 		allParties[1] = new Party("Meretz", meretz, Wing.Left);
@@ -39,24 +39,20 @@ public class Program {
 		allCitizens[6] = new Citizen(777777777, 1990, "Bwer");
 		allCitizens[7] = new Citizen(888888888, 1991, "Rhf");
 		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs");
-		allCitizens[9] = new SickCitizen(123456789,1992,"sick",11);
+		allCitizens[9] = new SickCitizen(123456789, 1992, "sick", 11);
+
 		
-		
-		
-		//round1.addVotingStationList(allVotingStations);
 		for (int i = 0; i < allVotingStations.length; i++) {
 			round1.addVotingStation(allVotingStations[i]);
-			
+
 		}
 		for (int i = 0; i < allCitizens.length; i++) {
 			round1.addCitizen(allCitizens[i]);
-			//round1.setCitizenVotingStation(allCitizens[i]);
 		}
 		for (int i = 0; i < allParties.length; i++) {
 			round1.addParty(allParties[i]);
 		}
-		PartyMember p1 = new PartyMember(123456789,1990,"Member");
-		
+		PartyMember p1 = new PartyMember(123456789, 1990, "Member");
 
 		// -----------------Menu------------------------
 		System.out.println(round1.getYear() + " Election system:");
@@ -74,49 +70,49 @@ public class Program {
 		// ---------------------------------------------
 
 		Scanner scan = new Scanner(System.in);
-		 int choice ;
-		 do {
-			
-			 choice = scan.nextInt();
-		switch (choice) {
-		case 1:
-			round1.addVotingStation("Beer Sheva",false,true);
-			break;
-		case 2:
-			Citizen c1 = new Citizen(123456789,1990,"NEWC");
-			 round1.addCitizen(c1);
-			break;
-		case 3:
-			LocalDate d = LocalDate.of(1950, 11, 26);
-			Party par1 = new Party("Avoda",d,Wing.Left);
-			 round1.addParty(par1);
-			break;
-		case 4:
-			 round1.addNewCandidate(p1);
-			break;
-		case 5:
+		int choice;
+		do {
 
-			System.out.println(round1.getVotingStations());
-			break;
-		case 6:
+			choice = scan.nextInt();
+			switch (choice) {
+			case 1:
+				round1.addVotingStation("Beer Sheva", false, true);
+				break;
+			case 2:
+				Citizen c1 = new Citizen(123456789, 1990, "NEWC");
+				round1.addCitizen(c1);
+				break;
+			case 3:
+				LocalDate d = LocalDate.of(1950, 11, 26);
+				Party par1 = new Party("Avoda", d, Wing.Left);
+				round1.addParty(par1);
+				break;
+			case 4:
+				round1.addNewCandidate(p1);
+				break;
+			case 5:
 
-			System.out.println(round1.getAllCitizens());
-			break;
-		case 7:
+				System.out.println(round1.getVotingStations());
+				break;
+			case 6:
 
-			System.out.println(round1.getAllParties());
-			break;
-		case 8:
-			round1.startVote();
-			break;
-		case 9:
-			System.out.println(round1.results());
-			break;
-		case 10:
+				System.out.println(round1.getAllCitizens());
+				break;
+			case 7:
 
-			break;
-		}
-		 }while(choice!=10);
-		 scan.close();
+				System.out.println(round1.getAllParties());
+				break;
+			case 8:
+				round1.startVote();
+				break;
+			case 9:
+				System.out.println(round1.results());
+				break;
+			case 10:
+
+				break;
+			}
+		} while (choice != 10);
+		scan.close();
 	}
 }

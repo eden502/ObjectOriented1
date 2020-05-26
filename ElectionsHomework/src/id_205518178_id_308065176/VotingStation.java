@@ -16,45 +16,46 @@ public class VotingStation<T extends Citizen> {
 	protected boolean corona;
 	protected boolean military;
 
-	
-	//---------------------C'tors---------------------
+	// ---------------------C'tors---------------------
 	public VotingStation() {
-		this(DEFAULT_ADDRESS,false,false);
+		this(DEFAULT_ADDRESS, false, false);
 
 	}
+
 	public VotingStation(String address) {
-		this(address,false,false);
+		this(address, false, false);
 	}
-	public VotingStation(String address,boolean corStat) {
-		this(address,corStat,false);
+
+	public VotingStation(String address, boolean corStat) {
+		this(address, corStat, false);
 	}
-	public VotingStation(String address,boolean corStat, boolean milStat) {
+
+	public VotingStation(String address, boolean corStat, boolean milStat) {
 		setAddress(address);
 		corona = corStat;
 		military = milStat;
 		voters = new Vector<T>();
-		stationId=++counter;
+		stationId = ++counter;
 	}
 
-	
-	//--------------------Getters/Setters--------------
-	
+	// --------------------Getters/Setters--------------
 
 	public int getStationId() {
 		return this.stationId;
 	}
-	
+
 	public void setNumOfParties(int numOfPartiesAdded) {
-		this.results = new int [numOfPartiesAdded];
+		this.results = new int[numOfPartiesAdded];
 	}
-	
-	public int [] getVotingStationResults() {
+
+	public int[] getVotingStationResults() {
 		return results;
 	}
-	private void setAddress(String address) {//Consider using exception
-			this.address = address;
+
+	private void setAddress(String address) {// Consider using exception
+		this.address = address;
 	}
-	//--------------------------------------------------
+	// --------------------------------------------------
 
 	@Override
 	public String toString() {
@@ -66,10 +67,8 @@ public class VotingStation<T extends Citizen> {
 			str.append("\n" + voters.get(i));
 
 		}
-		return "" + str+"\n";
+		return "" + str + "\n";
 	}
-
-	
 
 	public void castVote(int vote) {
 		results[vote]++;
@@ -79,20 +78,20 @@ public class VotingStation<T extends Citizen> {
 	public String getStatistics() {
 		String s;
 		double percentage = 0;
-		if(voters.size()>0) {
-		percentage = (double)numOfVotes/voters.size()*100;
-		s ="Vote percentage : "+(int)percentage+"%\n";
-		return s;
-		}
-		else return "Vote percentage : 0%\n";
+		if (voters.size() > 0) {
+			percentage = (double) numOfVotes / voters.size() * 100;
+			s = "Vote percentage : " + (int) percentage + "%\n";
+			return s;
+		} else
+			return "Vote percentage : 0%\n";
 	}
 
 	public void resetRound() {
 		for (int i = 0; i < results.length; i++) {
-			results[i]=0;
+			results[i] = 0;
 			numOfVotes = 0;
 		}
-		
+
 	}
 
 	public boolean setCorona() {
@@ -108,15 +107,9 @@ public class VotingStation<T extends Citizen> {
 	public void addVoter(T c) {
 		voters.add(c);
 	}
+
 	public void updateNumOfParties(int num) {
-		results = new int [num];
+		results = new int[num];
 	}
-
-	
-
-		
-		
-		
-		
 
 }
