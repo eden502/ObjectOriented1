@@ -7,11 +7,19 @@ package id_205518178_id_308065176;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import id_205518178_id_308065176.Party.Wing;
+import com.sun.javafx.application.LauncherImpl;
 
-public class Program {
+import id_205518178_id_308065176.Party.Wing;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import view_id_205518178_id_308065176.MainView;
+
+public class Program extends Application{
+
 
 	public static void main(String[] args) throws Exception {
+        launch(args);
+
 
 		// -----------HARD CODED OBJECTS------------------
 		RoundManager round1 = new RoundManager(1, 2, 2017);
@@ -115,4 +123,10 @@ public class Program {
 		} while (choice != 10);
 		scan.close();
 	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		MainView theView = new MainView(primaryStage,2,2017);		
+	}
+
 }
