@@ -15,7 +15,7 @@ public class RoundManager {
 
 	// ---------------------------USING VECTORS-------------------------------
 
-	private Vector<Citizen> allCitizens;
+	private Set<Citizen> allCitizens;
 	private Vector<VotingStation<Citizen>> healthyCitizens;
 	private Vector<VotingStation<SickCitizen>> sickCitizens;
 	private Vector<VotingStation<Soldier>> soldiers;
@@ -23,7 +23,7 @@ public class RoundManager {
 	private Vector<Party> allParties;
 
 	public RoundManager(int roundNumber, int month, int year) {
-		allCitizens = new Vector<Citizen>();
+		allCitizens = new Set<Citizen>();
 		healthyCitizens = new Vector<VotingStation<Citizen>>();
 		sickCitizens = new Vector<VotingStation<SickCitizen>>();
 		soldiers = new Vector<VotingStation<Soldier>>();

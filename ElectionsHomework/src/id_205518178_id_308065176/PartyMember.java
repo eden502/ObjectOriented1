@@ -10,7 +10,6 @@ public class PartyMember extends Citizen {
 	public PartyMember(int id, int birthYear, String name) throws Exception {
 		super(id, birthYear, name);
 		this.position = ++positionCounter;
-		this.memberOf = memberOf;
 		isMember = false;
 
 	}

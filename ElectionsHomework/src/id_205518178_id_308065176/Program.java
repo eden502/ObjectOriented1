@@ -6,6 +6,7 @@ package id_205518178_id_308065176;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.Vector;
 
 import com.sun.javafx.application.LauncherImpl;
 
@@ -23,42 +24,61 @@ public class Program extends Application{
 
 		// -----------HARD CODED OBJECTS------------------
 		RoundManager round1 = new RoundManager(1, 2, 2017);
-
-		VotingStation[] allVotingStations = new VotingStation[3];
-		allVotingStations[0] = new VotingStation("Tel Aviv 15", true, false);
-		allVotingStations[1] = new VotingStation("Rosh Pina 46", false, false);
-		allVotingStations[2] = new VotingStation("Rasfana 14", false, true);
-
-		Party[] allParties = new Party[3];
+		Vector <VotingStation> allVotingStations= new Vector<VotingStation>();
+		//VotingStation[] allVotingStations = new VotingStation[3];
+		VotingStation v1 = new VotingStation("Tel Aviv 15", true, false);
+		VotingStation v2 = new VotingStation("Rosh Pina 46", false, false);
+		VotingStation v3 = new VotingStation("Rasfana 14", false, true);
+		allVotingStations.add(v1);
+		allVotingStations.add(v2);
+		allVotingStations.add(v3);
+		
+		//Party[] allParties = new Party[3];
 		LocalDate likud = LocalDate.of(1988, 4, 25);
 		LocalDate meretz = LocalDate.of(2002, 6, 14);
 		LocalDate KL = LocalDate.of(2017, 5, 12);
-		allParties[0] = new Party("Likud", likud, Wing.Right);
-		allParties[1] = new Party("Meretz", meretz, Wing.Left);
-		allParties[2] = new Party("Kahol Lavan", KL, Wing.Center);
+		Vector <Party> allParties = new Vector<Party>();
+		Party allParties1 = new Party("Likud", likud, Wing.Right);
+		Party allParties2 = new Party("Meretz", meretz, Wing.Left);
+		Party allParties3 = new Party("Kahol Lavan", KL, Wing.Center);
+		allParties.add(allParties1);
+		allParties.add(allParties2);
+		allParties.add(allParties3);
 
-		Citizen[] allCitizens = new Citizen[10];
-		allCitizens[0] = new Soldier(555555555, 1989, "Hob", false);
-		allCitizens[1] = new Citizen(111111111, 1990, "Bob");
-		allCitizens[2] = new Citizen(222222222, 1991, "Rob");
-		allCitizens[3] = new Citizen(333333333, 1992, "Kob");
-		allCitizens[4] = new Citizen(444444444, 1993, "Sob");
-		allCitizens[5] = new Citizen(666666666, 1989, "erob");
-		allCitizens[6] = new Citizen(777777777, 1990, "Bwer");
-		allCitizens[7] = new Citizen(888888888, 1991, "Rhf");
-		allCitizens[8] = new Citizen(999999999, 1992, "Kvbs");
-		allCitizens[9] = new SickCitizen(123456789, 1992, "sick", 11);
-
+		//Citizen[] allCitizens = new Citizen[10];
+		Vector <Citizen> allCitizens = new Vector<Citizen>();
+		Soldier allCitizens1 = new Soldier(555555555, 1989, "Hob", false);
+		Citizen allCitizens2 = new Citizen(111111111, 1990, "Bob");
+		Citizen allCitizens3 = new Citizen(222222222, 1991, "Rob");
+		Citizen allCitizens4 = new Citizen(333333333, 1992, "Kob");
+		Citizen allCitizens5 = new Citizen(444444444, 1993, "Sob");
+		Citizen allCitizens6 = new Citizen(666666666, 1989, "erob");
+		Citizen allCitizens7 = new Citizen(777777777, 1990, "Bwer");
+		Citizen allCitizens8 = new Citizen(888888888, 1991, "Rhf");
+		Citizen allCitizens9 = new Citizen(999999999, 1992, "Kvbs");
+		SickCitizen allCitizens10 = new SickCitizen(123456789, 1992, "sick", 11);
 		
-		for (int i = 0; i < allVotingStations.length; i++) {
-			round1.addVotingStation(allVotingStations[i]);
+		allCitizens.add(allCitizens1);
+		allCitizens.add(allCitizens2);
+		allCitizens.add(allCitizens3);
+		allCitizens.add(allCitizens4);
+		allCitizens.add(allCitizens5);
+		allCitizens.add(allCitizens6);
+		allCitizens.add(allCitizens7);
+		allCitizens.add(allCitizens8);
+		allCitizens.add(allCitizens9);
+		allCitizens.add(allCitizens10);
+		
+		
+		for (int i = 0; i < allVotingStations.size(); i++) {
+			round1.addVotingStation(allVotingStations.get(i));
 
 		}
-		for (int i = 0; i < allCitizens.length; i++) {
-			round1.addCitizen(allCitizens[i]);
+		for (int i = 0; i < allCitizens.size(); i++) {
+			round1.addCitizen(allCitizens.get(i));
 		}
-		for (int i = 0; i < allParties.length; i++) {
-			round1.addParty(allParties[i]);
+		for (int i = 0; i < allParties.size(); i++) {
+			round1.addParty(allParties.get(i));
 		}
 		PartyMember p1 = new PartyMember(123456789, 1990, "Member");
 

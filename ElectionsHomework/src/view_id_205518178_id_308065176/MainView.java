@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.effect.ColorAdjust;
@@ -47,34 +48,43 @@ public class MainView extends Application{
 		
 		// Top BorderPane Editor
 		Caption.setUnderline(true);
-		Caption.setFont(Font.font("Verdana", FontWeight.BOLD, 30));
+		Caption.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
 		bpRoot.setTop(Caption);
 		bpRoot.setAlignment(Caption, Pos.CENTER);
 		
 		// Center BorderPane Editor
-		bpRoot.setCenter(new Label("Choise"));
+		bpRoot.setCenter(new Label("Choice"));
 		
 		//Left Section BorderPane Editor - VBOX Type
 		VBox vBox = new VBox();
+		Button mainMenuBtn = new Button("Main Menu");
+		Button addVotingStationBtn = new Button("Add Voting Station");
+		Button addCitizenBtn = new Button("Add Citizen");
+		Button addPartyBtn = new Button("Add Party");
+		Button addPartyMemberBtn = new Button("Add Candidate");
+		Button showAllVotingStationsBtn = new Button("Show Voting Stations");
+		Button showAllCitizensBtn = new Button("Show All Citizens");
+		Button showAllPartiesBtn = new Button ("Show All Parties");
+		Button voteBtn = new Button ("Start Vote");
 		
-		Label mainMenuLbl = createLabel("Main Menu", 12, true, FontWeight.BOLD);
-		Label addVotingStatLbl = createLabel("Add Voting Station", 12, true, FontWeight.SEMI_BOLD); 
-		Label addCitizenLbl = createLabel("Add Citizen", 12, true, FontWeight.SEMI_BOLD);
-		Label addPartyLbl = createLabel("Add Party", 12, true, FontWeight.SEMI_BOLD);
-		Label addPartyMemLbl = createLabel("Add party candidate", 12, true, FontWeight.SEMI_BOLD);
-		Label showAllVotStatLbl = createLabel("Show all voting stations", 12, true, FontWeight.SEMI_BOLD);
-		Label showAllCitizenLbl = createLabel("Show all citizens", 12, true, FontWeight.SEMI_BOLD);
-		Label showAllPartiesLbl = createLabel("Show all parties", 12, true, FontWeight.SEMI_BOLD);
-		Label voteLbl = createLabel("Vote", 12, true, FontWeight.SEMI_BOLD);
-		Label showResultsLbl = createLabel("Show Results", 12, true, FontWeight.SEMI_BOLD);
-		Label exitLbl = createLabel("Exit", 12, true, FontWeight.SEMI_BOLD);
+//		Label mainMenuLbl = createLabel("Main Menu", 12, true, FontWeight.BOLD);
+//		Label addVotingStatLbl = createLabel("Add Voting Station", 12, true, FontWeight.SEMI_BOLD); 
+//		Label addCitizenLbl = createLabel("Add Citizen", 12, true, FontWeight.SEMI_BOLD);
+//		Label addPartyLbl = createLabel("Add Party", 12, true, FontWeight.SEMI_BOLD);
+//		Label addPartyMemLbl = createLabel("Add party candidate", 12, true, FontWeight.SEMI_BOLD);
+//		Label showAllVotStatLbl = createLabel("Show all voting stations", 12, true, FontWeight.SEMI_BOLD);
+//		Label showAllCitizenLbl = createLabel("Show all citizens", 12, true, FontWeight.SEMI_BOLD);
+//		Label showAllPartiesLbl = createLabel("Show all parties", 12, true, FontWeight.SEMI_BOLD);
+//		Label voteLbl = createLabel("Vote", 12, true, FontWeight.SEMI_BOLD);
+//		Label showResultsLbl = createLabel("Show Results", 12, true, FontWeight.SEMI_BOLD);
+//		Label exitLbl = createLabel("Exit", 12, true, FontWeight.SEMI_BOLD);
 		vBox.setPrefWidth(200);
 		
-		vBox.setSpacing(15);
-		vBox.setBackground(new Background(new BackgroundFill(Color.FLORALWHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-		vBox.getChildren().addAll(mainMenuLbl,addVotingStatLbl,addCitizenLbl,addPartyLbl,addPartyMemLbl,showAllVotStatLbl,showAllCitizenLbl,showAllPartiesLbl,voteLbl,showResultsLbl,exitLbl);
-		
+		vBox.setSpacing(10);
+		vBox.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+		//vBox.getChildren().addAll(mainMenuBtn,addVotingStationBtn,addCitizenLbl,addPartyLbl,addPartyMemLbl,showAllVotStatLbl,showAllCitizenLbl,showAllPartiesLbl,voteLbl,showResultsLbl,exitLbl);
+		vBox.getChildren().addAll(mainMenuBtn,addVotingStationBtn,addCitizenBtn,addPartyBtn,addPartyMemberBtn,showAllVotingStationsBtn,showAllCitizensBtn,showAllPartiesBtn,voteBtn);
 		bpRoot.setLeft(vBox);
 		
 		
